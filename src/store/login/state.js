@@ -5,4 +5,6 @@ export const state = {
     user_name: "",
     password: "",
   },
+  loginField: "teste1",
+  passwordField: "teste2",
 };

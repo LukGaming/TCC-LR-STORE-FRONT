@@ -7,4 +7,7 @@ export const mutations = {
     state.loggedUser = {};
     return payload;
   },
+  setFields(state, payload) {
+    state[payload.part] = payload.value;
+  },
 };

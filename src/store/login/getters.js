@@ -5,4 +5,10 @@ export const getters = {
   getUser(state) {
     return state.user;
   },
+  getPasswordField(state) {
+    return state.passwordField;
+  },
+  getLoginField(state) {
+    return state.loginField;
+  },
 };

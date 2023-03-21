@@ -14,15 +14,18 @@
                 </v-avatar>
               </div>
 
-              <v-text-field v-model="loginField" label="Login"></v-text-field>
               <v-text-field
-                v-model="passwordField"
+                v-model="SwitchLoginField"
+                label="Login"
+              ></v-text-field>
+              <v-text-field
+                v-model="SwitchPasswordField"
                 label="Senha"
               ></v-text-field>
               <div class="d-flex justify-center">
                 <DefaultButton
                   text_button="Login"
-                  @callback="login"
+                  @callback="loginAction"
                 ></DefaultButton>
               </div>
             </v-col>
@@ -41,20 +44,14 @@ export default {
   },
 
   data() {
-    return {
-      loginField: "",
-      passwordField: "",
-    };
+    return {};
   },
   methods: {
-    ...mapActions({ loginAction: "loginStore/login" }),
-    login() {
-      var payload = {
-        loginField: this.loginField,
-        passwordField: this.passwordField,
-      };
-      this.loginAction(payload);
-    },
+    ...mapActions({
+      loginAction: "loginStore/login",
+      setPasswordField: "loginStore/setPasswordField",
+      setLoginField: "loginStore/setLoginField",
+    }),
   },
   mounted() {
     console.log(this.isLogged);
@@ -62,7 +59,25 @@ export default {
   computed: {
     ...mapGetters({
       isLogged: "loginStore/isLogged",
+      getLoginField: "loginStore/getLoginField",
+      getPasswordField: "loginStore/getPasswordField",
     }),
+    SwitchLoginField: {
+      get() {
+        return this.getLoginField;
+      },
+      set(value) {
+        this.setLoginField(value);
+      },
+    },
+    SwitchPasswordField: {
+      get() {
+        return this.getPasswordField;
+      },
+      set(value) {
+        this.setPasswordField(value);
+      },
+    },
   },
 };
 </script>
