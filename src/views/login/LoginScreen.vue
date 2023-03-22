@@ -13,20 +13,37 @@
                   ></v-img>
                 </v-avatar>
               </div>
-
+              <div class="mt-4"></div>
               <v-text-field
                 v-model="SwitchLoginField"
                 label="Login"
+                hide-details
+                outlined
+                @blur="validateFields('validateLogin')"
               ></v-text-field>
+              <ErrorAlertComponent
+                v-if="getLoginErrors.loginFieldError != ''"
+                :errorMessage="getLoginErrors.loginFieldError"
+              />
+              <div class="mt-5"></div>
               <v-text-field
                 v-model="SwitchPasswordField"
                 label="Senha"
-              ></v-text-field>
+                type="password"
+                hide-details
+                outlined
+                @blur="validateFields('validatePassword')"
+              >
+              </v-text-field>
+              <ErrorAlertComponent
+                v-if="getLoginErrors.passwordFieldError != ''"
+                :errorMessage="getLoginErrors.passwordFieldError"
+              />
+
               <div class="d-flex justify-center">
-                <DefaultButton
-                  text_button="Login"
-                  @callback="loginAction"
-                ></DefaultButton>
+                <DefaultButton text_button="Login" @callback="loginAction">
+                </DefaultButton>
+                {{ getLoginErrors }}
               </div>
             </v-col>
           </v-row>
@@ -41,6 +58,8 @@ export default {
   components: {
     DefaultButton: () =>
       import("@/components/utilities/DefaultBlackButton.vue"),
+    ErrorAlertComponent: () =>
+      import("@/components/utilities/ErrorAlertComponent.vue"),
   },
 
   data() {
@@ -51,6 +70,7 @@ export default {
       loginAction: "loginStore/login",
       setPasswordField: "loginStore/setPasswordField",
       setLoginField: "loginStore/setLoginField",
+      validateFields: "loginStore/validateFields",
     }),
   },
   mounted() {
@@ -61,6 +81,7 @@ export default {
       isLogged: "loginStore/isLogged",
       getLoginField: "loginStore/getLoginField",
       getPasswordField: "loginStore/getPasswordField",
+      getLoginErrors: "loginStore/getLoginErrors",
     }),
     SwitchLoginField: {
       get() {
