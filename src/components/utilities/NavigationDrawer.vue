@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      logout: "loginStore/logout",
+      logout: "userStore/logout",
     }),
   },
 };

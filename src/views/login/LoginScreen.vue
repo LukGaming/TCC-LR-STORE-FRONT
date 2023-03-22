@@ -39,11 +39,10 @@
                 v-if="getLoginErrors.passwordFieldError != ''"
                 :errorMessage="getLoginErrors.passwordFieldError"
               />
-
+              <div class="mt-5"></div>
               <div class="d-flex justify-center">
                 <DefaultButton text_button="Login" @callback="loginAction">
                 </DefaultButton>
-                {{ getLoginErrors }}
               </div>
             </v-col>
           </v-row>
@@ -73,12 +72,10 @@ export default {
       validateFields: "loginStore/validateFields",
     }),
   },
-  mounted() {
-    console.log(this.isLogged);
-  },
+
   computed: {
     ...mapGetters({
-      isLogged: "loginStore/isLogged",
+      isLogged: "userStore/isLogged",
       getLoginField: "loginStore/getLoginField",
       getPasswordField: "loginStore/getPasswordField",
       getLoginErrors: "loginStore/getLoginErrors",

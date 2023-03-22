@@ -2,10 +2,10 @@ import $http from "@/plugins/axios";
 import $router from "@/router/index";
 export const actions = {
   async login({ commit, dispatch, getters, state }, payload) {
-    dispatch("validateFields", "validateAll");
+    await dispatch("validateFields", "validateAll");
     var canSendForm = getters.canSendFormCategory;
+
     if (canSendForm) {
-      console.log(`canSendForm ${canSendForm}`);
       dispatch("utilitiesStore/setIsLoading", true, { root: true });
       const formData = new FormData();
       formData.append("user_name", state.loginField);
@@ -14,24 +14,45 @@ export const actions = {
       var request = await $http.post("/user/authenticate", formData);
       if (request.status == 200) {
         if (request.data.sucesso == true) {
-          commit("login", {
-            part: "loggedUser",
-            value: request.data.user,
+          commit("userStore/setUser", request.data.user, {
+            root: true,
+          });
+          commit("userStore/setIslogged", true, {
+            root: true,
           });
 
-          commit("login", {
-            part: "isLogged",
-            value: true,
-          });
-          //TODO: implement a toastr
           $router.push("/home");
+          let snackBarAlert = {
+            showSnackBar: true,
+            message: "logado com sucesso.",
+            textColor: "white--color",
+            color: "black",
+          };
+
+          commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+            root: true,
+          });
         } else {
-          //TODO: implement a toastr
-          console.log(request.data.mensagem);
+          let snackBarAlert = {
+            showSnackBar: true,
+            message: request.data.mensagem,
+            textColor: "white--color",
+            color: "red",
+          };
+          commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+            root: true,
+          });
         }
       } else {
-        //TODO: implement a toastr
-        console.log("Aconteceu um erro interno");
+        let snackBarAlert = {
+          showSnackBar: true,
+          message: "Ocorreu algum erro interno.",
+          textColor: "white--color",
+          color: "red",
+        };
+        commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+          root: true,
+        });
       }
       dispatch("utilitiesStore/setIsLoading", false, { root: true });
     }
@@ -55,8 +76,6 @@ export const actions = {
     });
   },
   validateFields({ commit, state, getters, dispatch }, payload) {
-    console.log("validando");
-
     let order;
     switch (payload) {
       case "validateLogin":
@@ -72,11 +91,10 @@ export const actions = {
         break;
     }
     if (order >= 1) {
-      console.log("validando campo 1");
       let fieldToValidate;
       let errorMessage = "";
       fieldToValidate = state.loginField;
-      console.log(state.loginField);
+
       errorMessage =
         fieldToValidate == null || fieldToValidate == ""
           ? "O campo de login não pode ficar vazio."
@@ -85,7 +103,7 @@ export const actions = {
           : fieldToValidate.length >= 20
           ? "O campo de login deve conter no máximo 20 caractéres"
           : "";
-      console.log(`mensagem de erro: ${errorMessage}`);
+
       commit("setLoginErrors", {
         part: "loginFieldError",
         value: errorMessage,

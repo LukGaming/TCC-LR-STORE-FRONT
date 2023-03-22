@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <v-app>
+      <SnackBarMessage />
       <DefaultLoading v-if="isLoading" />
       <div v-if="!isLogged"><router-view /></div>
       <div v-if="isLogged"><NavigationDrawer></NavigationDrawer></div>
@@ -15,11 +16,12 @@ export default {
     DefaultLoading: () => import("@/components/utilities/DefaultLoading.vue"),
     NavigationDrawer: () =>
       import("@/components/utilities/NavigationDrawer.vue"),
+    SnackBarMessage: () => import("@/components/utilities/SnackBarMessage.vue"),
   },
   computed: {
     ...mapGetters({
       isLoading: "utilitiesStore/isLoading",
-      isLogged: "loginStore/isLogged",
+      isLogged: "userStore/isLogged",
     }),
   },
   created() {
