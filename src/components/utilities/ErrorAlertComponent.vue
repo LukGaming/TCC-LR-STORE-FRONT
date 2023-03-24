@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-alert type="alert" color="black" class="mt-2">
+    <v-alert type="alert" color="red" class="mt-2">
       {{ errorMessage }}
     </v-alert>
   </div>

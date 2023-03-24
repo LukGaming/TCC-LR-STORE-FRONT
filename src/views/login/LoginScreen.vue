@@ -20,7 +20,8 @@
                 hide-details
                 outlined
                 @blur="validateFields('validateLogin')"
-              ></v-text-field>
+              >
+              </v-text-field>
               <ErrorAlertComponent
                 v-if="getLoginErrors.loginFieldError != ''"
                 :errorMessage="getLoginErrors.loginFieldError"
