@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Login from "../views/login/LoginScreen.vue";
 import HomePage from "@/components/home/Home-Page.vue";
 import CreateSale from "@/components/sales/CreateSale.vue";
-
+import ManufacturerPage from '@/components/manufacturer/ManufacturerPage.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -21,6 +21,11 @@ const routes = [
     path: "/vendas",
     name: "vendas",
     component: CreateSale,
+  },
+  {
+    path: "/fabricantes",
+    name: "fabricantes",
+    component: ManufacturerPage,
   },
   {
     path: "*",

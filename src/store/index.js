@@ -12,6 +12,7 @@ import { loginStore } from "./login/index";
 import { utilitiesStore } from "./utilities";
 import { userStore } from "./user";
 import { salesStore } from "./sales";
+import { manufacturerStore } from "./manufacturer";
 
 export default new Vuex.Store({
   modules: { 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     utilitiesStore, 
     userStore, 
     salesStore,
+    manufacturerStore,
   },
   plugins: [vuexLocal.plugin],
 });

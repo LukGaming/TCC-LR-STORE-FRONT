@@ -6,6 +6,7 @@
 <script>
 export default {
     created(){
+
         console.log("componente criado");
         console.log(this.$router);
     }

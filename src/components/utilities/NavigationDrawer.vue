@@ -14,7 +14,7 @@
           active-class="deep-purple--text text--accent-4"
         >
           <v-list-item>
-            <v-list-item-title>Foo</v-list-item-title>
+            <v-list-item-title><div @click="goToManufacturer()">Fabricantes</div></v-list-item-title>
           </v-list-item>
 
           <v-list-item>
@@ -65,6 +65,9 @@ export default {
     ...mapActions({
       logout: "userStore/logout",
     }),
+    goToManufacturer(){
+      this.$router.push('/fabricantes');
+    }
   },
 };
 </script>

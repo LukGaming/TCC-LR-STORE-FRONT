@@ -1,5 +1,6 @@
 import $http from "@/plugins/axios";
 import $router from "@/router/index";
+import { LoginMessages } from "@/utils/messages/login/login_fields";
 export const actions = {
   async login({ commit, dispatch, getters, state }, payload) {
     await dispatch("validateFields", "validateAll");
@@ -97,11 +98,11 @@ export const actions = {
 
       errorMessage =
         fieldToValidate == null || fieldToValidate == ""
-          ? "O campo de login não pode ficar vazio."
+          ? LoginMessages.LoginFieldCannotBeEmpty
           : fieldToValidate.length <= 5
-          ? "O campo de Login deve conter no mínimo 5 caractéres."
+          ? LoginMessages.LoginFieldCharactereInsuficient
           : fieldToValidate.length >= 20
-          ? "O campo de login deve conter no máximo 20 caractéres"
+          ? LoginMessages.LoginFieldCharactereInsuficient
           : "";
 
       commit("setLoginErrors", {
