@@ -11,7 +11,14 @@ const vuexLocal = new VuexPersistence({
 import { loginStore } from "./login/index";
 import { utilitiesStore } from "./utilities";
 import { userStore } from "./user";
+import { salesStore } from "./sales";
+
 export default new Vuex.Store({
-  modules: { loginStore, utilitiesStore, userStore },
+  modules: { 
+    loginStore, 
+    utilitiesStore, 
+    userStore, 
+    salesStore,
+  },
   plugins: [vuexLocal.plugin],
 });
