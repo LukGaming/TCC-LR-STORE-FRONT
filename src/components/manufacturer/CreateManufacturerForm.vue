@@ -10,9 +10,9 @@
     >
     </v-text-field>
     <ErrorAlertComponent
-                v-if="getManufacturerMessages.manufacturerName != ''"
-                :errorMessage="getManufacturerMessages.manufacturerName"
-              />
+      v-if="getManufacturerMessages.manufacturerName != ''"
+      :errorMessage="getManufacturerMessages.manufacturerName"
+    />
     <div class="mt-5"></div>
     <div class="d-flex justify-center">
       <DefaultButton
@@ -29,13 +29,13 @@ export default {
   components: {
     DefaultButton: () =>
       import("@/components/utilities/DefaultBlackButton.vue"),
-      ErrorAlertComponent: () => import("@/components/utilities/ErrorAlertComponent.vue"),
+    ErrorAlertComponent: () =>
+      import("@/components/utilities/ErrorAlertComponent.vue"),
   },
   computed: {
     ...mapGetters({
       manufacturerName: "manufacturerStore/manufacturerName",
       getManufacturerMessages: "manufacturerStore/getManufacturerMessages",
-      
     }),
     switchManufacturerName: {
       get() {
@@ -50,9 +50,8 @@ export default {
     ...mapActions({
       setManufacturerName: "manufacturerStore/setManufacturerName",
       validateFields: "manufacturerStore/validateFields",
-      createManufacturer: "manufacturerStore/createManufacturer"
+      createManufacturer: "manufacturerStore/createManufacturer",
     }),
-
   },
 };
 </script>

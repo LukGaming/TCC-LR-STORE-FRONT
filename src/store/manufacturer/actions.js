@@ -16,10 +16,21 @@ export const actions = {
       formData.append("manufacture_name", state.manufacturerName);
 
       var response = await $http.post("manufacturer", formData);
-      if(response.status == 201){
-        commit("addNewManufacturer", response.data)
+      if (response.status == 201) {
+        commit("addNewManufacturer", response.data);
+        dispatch("clearManufacturerForm");
+        commit("setManufacturerDialog", false);
+        let snackBarAlert = {
+          showSnackBar: true,
+          message: "Fabricante criada com sucesso.",
+          textColor: "white--color",
+          color: "black",
+        };
+
+        commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+          root: true,
+        });
       }
-     
     }
 
     return commit, payload;
@@ -57,5 +68,20 @@ export const actions = {
         value: errorMessage,
       });
     }
+  },
+  setManufacturerDialog({ commit }, payload) {
+    commit("setManufacturerDialog", payload);
+  },
+  openManufacturerDialog({ commit }, payload) {
+    if (payload.edit == false) {
+      commit("setManufacturerDialog", true);
+    }
+  },
+  clearManufacturerForm({ commit }) {
+    commit("setManufacturerName", "");
+    commit("setErrorMessages", {
+      part: "manufacturerName",
+      value: "",
+    });
   },
 };

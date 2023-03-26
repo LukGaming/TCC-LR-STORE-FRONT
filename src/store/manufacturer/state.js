@@ -1,6 +1,5 @@
 export const state = {
-  manufacturers: [
-  ],
+  manufacturers: [],
   headers: [
     {
       text: "Nome da Fabricante",
@@ -11,7 +10,6 @@ export const state = {
   manufacturerName: "",
   manufacturerMessages: {
     manufacturerName: "",
-  }
-
-
+  },
+  manufacturerDialog: false,
 };
