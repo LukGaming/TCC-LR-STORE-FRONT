@@ -4,5 +4,13 @@ export const mutations = {
     },
     setManufacturerName(state, payload){
         state.manufacturerName = payload;
+    },
+    setErrorMessages(state, payload){
+
+        state.manufacturerMessages[payload.part] = payload.value
+    },
+    addNewManufacturer(state, payload){
+        state.manufacturers.push(payload)
     }
+    
 };

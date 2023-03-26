@@ -9,10 +9,10 @@
       @blur="validateFields('validateManufacturerName')"
     >
     </v-text-field>
-    <!-- <ErrorAlertComponent
-                v-if="getLoginErrors.passwordFieldError != ''"
-                :errorMessage="getLoginErrors.passwordFieldError"
-              /> -->
+    <ErrorAlertComponent
+                v-if="getManufacturerMessages.manufacturerName != ''"
+                :errorMessage="getManufacturerMessages.manufacturerName"
+              />
     <div class="mt-5"></div>
     <div class="d-flex justify-center">
       <DefaultButton
@@ -26,26 +26,33 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-    components: {DefaultButton: () => import("@/components/utilities/DefaultBlackButton.vue")},
+  components: {
+    DefaultButton: () =>
+      import("@/components/utilities/DefaultBlackButton.vue"),
+      ErrorAlertComponent: () => import("@/components/utilities/ErrorAlertComponent.vue"),
+  },
   computed: {
     ...mapGetters({
       manufacturerName: "manufacturerStore/manufacturerName",
+      getManufacturerMessages: "manufacturerStore/getManufacturerMessages",
+      
     }),
     switchManufacturerName: {
-        get(){
-            return this.manufacturerName;
-        },
-        set(value){
-            this.setManufacturerName(value);
-        }
-    }
+      get() {
+        return this.manufacturerName;
+      },
+      set(value) {
+        this.setManufacturerName(value);
+      },
+    },
   },
   methods: {
     ...mapActions({
-        setManufacturerName: "manufacturerStore/setManufacturerName",
-        validateFields: "manufacturerStore/validateFields",
+      setManufacturerName: "manufacturerStore/setManufacturerName",
+      validateFields: "manufacturerStore/validateFields",
+      createManufacturer: "manufacturerStore/createManufacturer"
     }),
-    createManufacturer(){}
+
   },
 };
 </script>

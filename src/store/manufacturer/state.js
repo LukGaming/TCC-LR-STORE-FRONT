@@ -8,6 +8,10 @@ export const state = {
       value: "manufacture_name",
     },
   ],
-  manufacturerName: "aaaaaaaaa",
+  manufacturerName: "",
+  manufacturerMessages: {
+    manufacturerName: "",
+  }
+
 
 };
