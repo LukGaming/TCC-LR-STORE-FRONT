@@ -16,17 +16,8 @@
           <v-list-item>
             <v-list-item-title><div @click="goToManufacturer()">Fabricantes</div></v-list-item-title>
           </v-list-item>
-
           <v-list-item>
-            <v-list-item-title>Bar</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Fizz</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Buzz</v-list-item-title>
+            <v-list-item-title><div @click="goToManuProducts()">Produtos</div></v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -67,7 +58,10 @@ export default {
     }),
     goToManufacturer(){
       this.$router.push('/fabricantes');
-    }
+    },
+    goToManuProducts(){
+      this.$router.push('/produtos');
+    },
   },
 };
 </script>

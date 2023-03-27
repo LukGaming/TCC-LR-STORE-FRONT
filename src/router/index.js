@@ -4,6 +4,7 @@ import Login from "../views/login/LoginScreen.vue";
 import HomePage from "@/components/home/Home-Page.vue";
 import CreateSale from "@/components/sales/CreateSale.vue";
 import ManufacturerPage from '@/components/manufacturer/ManufacturerPage.vue';
+import ProductPage from '@/components/product/ProductPage.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: "/fabricantes",
     name: "fabricantes",
     component: ManufacturerPage,
+  },
+  {
+    path: "/produtos",
+    name: "produtos",
+    component: ProductPage,
   },
   {
     path: "*",
