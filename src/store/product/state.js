@@ -13,4 +13,9 @@ export const state = {
   ],
   productName: "",
   selectedManufacturer: null,
+  productErrorMessages: {
+    productName: "",
+    selectedManufacturer: "",
+  },
+  productDialog: false,
 };

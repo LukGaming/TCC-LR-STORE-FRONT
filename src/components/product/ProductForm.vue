@@ -6,10 +6,15 @@
       label="Nome do Produto"
       hide-details
       outlined
-      @blur="validateFields('validadeProductName')"
+      @blur="validateFields('validateProductName')"
     >
     </v-text-field>
-    <ErrorAlertComponent errorMessage="Erro de nome" />
+
+    <ErrorAlertComponent
+      v-if="productErrorMessages.productName != ''"
+      :errorMessage="productErrorMessages.productName"
+    />
+    <div class="mt-5"></div>
     <v-select
       v-model="switchSelectedManufacturer"
       label="Selecionar uma fabricante"
@@ -18,14 +23,13 @@
       item-value="id"
       outlined
       hide-details
+      @blur="validateFields('validateSelectedManufacturer')"
     >
     </v-select>
-    <ErrorAlertComponent errorMessage="Erro de fabricante" />
-
-    <!-- <ErrorAlertComponent
-      v-if="getManufacturerMessages.manufacturerName != ''"
-      :errorMessage="getManufacturerMessages.manufacturerName"
-    /> -->
+    <ErrorAlertComponent
+      v-if="productErrorMessages.selectedManufacturer != ''"
+      :errorMessage="productErrorMessages.selectedManufacturer"
+    />
 
     <div class="mt-5"></div>
     <div class="d-flex justify-center">
@@ -48,6 +52,7 @@ export default {
       productName: "productStore/productName",
       manufacturers: "manufacturerStore/manufacturers",
       selectedManufacturer: "productStore/selectedManufacturer",
+      productErrorMessages: "productStore/productErrorMessages",
     }),
     switchProductName: {
       get() {
@@ -73,6 +78,7 @@ export default {
       getManufacturers: "manufacturerStore/getManufacturers",
       createProduct: "productStore/createProduct",
       setSelectedManufacturer: "productStore/setSelectedManufacturer",
+      validateFields: "productStore/validateFields",
     }),
   },
   created() {

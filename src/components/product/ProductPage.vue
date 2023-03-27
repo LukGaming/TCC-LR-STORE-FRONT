@@ -13,14 +13,14 @@
           <v-spacer></v-spacer>
           <DefaultButton
             text_button="Adicionar Produto"
-            @callback="openManuProductDialog({ edit: false })"
+            @callback="openProductDialog({ edit: false })"
           />
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
     </v-data-table>
-    <ProductForm />
+    <ProductDialog />
   </div>
 </template>
 <script>
@@ -29,7 +29,7 @@ export default {
   components: {
     DefaultButton: () =>
       import("@/components/utilities/DefaultBlackButton.vue"),
-    ProductForm: () => import("@/components/product/ProductForm.vue"),
+    ProductDialog: () => import("@/components/product/ProductDialog.vue"),
   },
   data() {
     return {};
@@ -41,7 +41,10 @@ export default {
     }),
   },
   methods: {
-    ...mapActions({ getProducts: "productStore/getProducts" }),
+    ...mapActions({
+      getProducts: "productStore/getProducts",
+      openProductDialog: "productStore/openProductDialog",
+    }),
   },
   created() {
     this.getProducts();

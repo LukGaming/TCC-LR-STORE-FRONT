@@ -38,7 +38,7 @@ export default {
       import("@/components/utilities/DefaultBlackButton.vue"),
 
     ManufacturerFormDialog: () =>
-      import("@/components/manufacturer/ManufacturerFormDialog.vue"),
+      import("@/components/manufacturer/ManufacturerDialog.vue"),
   },
 
   computed: {
