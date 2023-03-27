@@ -24,6 +24,7 @@
       outlined
       hide-details
       @blur="validateFields('validateSelectedManufacturer')"
+      :menu-props="{ bottom: true, offsetY: true }"
     >
     </v-select>
     <ErrorAlertComponent
@@ -33,7 +34,7 @@
 
     <div class="mt-5"></div>
     <div class="d-flex justify-center">
-      <DefaultButton text_button="Criar Fabricante" @callback="createProduct">
+      <DefaultButton text_button="Criar Produto" @callback="createProduct">
       </DefaultButton>
     </div>
   </div>

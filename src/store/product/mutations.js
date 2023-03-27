@@ -13,6 +13,7 @@ export const mutations = {
   },
   addNewProduct(state, payload) {
     state.products.push(payload);
+    console.log(state.products);
   },
   clearProductForm(state) {
     state.productErrorMessages.selectedManufacturer = "";
@@ -20,7 +21,7 @@ export const mutations = {
     state.productName = "";
     state.selectedManufacturer = "";
   },
-  setProductDialog(state, payload){
+  setProductDialog(state, payload) {
     state.productDialog = payload;
-  }
+  },
 };

@@ -8,7 +8,7 @@ export const state = {
     },
     {
       text: "Fabricante",
-      value: "manufecturer.manufacture_name",
+      value: "manufacturer.manufacture_name",
     },
   ],
   productName: "",
