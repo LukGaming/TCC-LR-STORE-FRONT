@@ -17,7 +17,10 @@
             <v-list-item-title><div @click="goToManufacturer()">Fabricantes</div></v-list-item-title>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title><div @click="goToManuProducts()">Produtos</div></v-list-item-title>
+            <v-list-item-title><div @click="goToProducts()">Produtos</div></v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title><div @click="goToClients()">Clientes</div></v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -59,8 +62,11 @@ export default {
     goToManufacturer(){
       this.$router.push('/fabricantes');
     },
-    goToManuProducts(){
+    goToProducts(){
       this.$router.push('/produtos');
+    },
+    goToClients(){
+      this.$router.push('/clientes');
     },
   },
 };

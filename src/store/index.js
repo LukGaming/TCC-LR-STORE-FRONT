@@ -13,16 +13,18 @@ import { utilitiesStore } from "./utilities";
 import { userStore } from "./user";
 import { salesStore } from "./sales";
 import { manufacturerStore } from "./manufacturer";
- import { productStore } from "./product";
+import { productStore } from "./product";
+import { clientStore } from "./client";
 
 export default new Vuex.Store({
-  modules: { 
-    loginStore, 
-    utilitiesStore, 
-    userStore, 
+  modules: {
+    loginStore,
+    utilitiesStore,
+    userStore,
     salesStore,
     manufacturerStore,
-    productStore
+    productStore,
+    clientStore,
   },
   plugins: [vuexLocal.plugin],
 });
