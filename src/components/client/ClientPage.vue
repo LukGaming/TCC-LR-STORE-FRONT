@@ -21,13 +21,15 @@
         </v-toolbar>
       </template>
     </v-data-table>
+    <ClientForm />
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
-    DefaultButton: () => import("@/components/utilities/DefaultBlackButton.vue")
+    DefaultButton: () => import("@/components/utilities/DefaultBlackButton.vue"),
+    ClientForm: () => import("@/components/client/ClientForm.vue")
   },
   methods: {
     ...mapActions({getClients: "clientStore/getClients"}),

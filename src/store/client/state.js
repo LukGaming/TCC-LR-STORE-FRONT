@@ -15,11 +15,15 @@ export const state = {
       value: "cpf",
     },
   ],
-  productName: "",
-  selectedManufacturer: null,
-  productErrorMessages: {
-    productName: "",
-    selectedManufacturer: "",
+  clientFormFields: {
+    clientName: "Paulo",
+    clientPhoneNumber: "64992753115",
+    clientCpf: "70198256132",
   },
-  productDialog: false,
+  clientErrorMessages: {
+    clientName: "",
+    clientPhoneNumber: "",
+    clientCpf: "",
+  },
+  clientDialog: false,
 };

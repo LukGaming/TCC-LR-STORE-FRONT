@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="text-center">
+  <div class="text-center ">
     <div class="text-center loading">
       <v-progress-circular :size="50" color="primary" indeterminate>
       </v-progress-circular>
@@ -22,7 +22,7 @@ export default {
   z-index: 99;
   left: 50%;
   top: 50%;
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
 }
 </style>
