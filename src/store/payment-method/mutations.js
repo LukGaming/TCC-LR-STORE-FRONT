@@ -1,6 +1,6 @@
 export const mutations = {
-  setClients(state, payload) {
-    state.clients = payload;
+  setPaymentMethods(state, payload) {
+    state.paymentMethods = payload;
   },
   setClientFormFields(state, payload) {
     state.clientFormFields[payload.part] = payload.value;

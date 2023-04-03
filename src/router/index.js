@@ -6,6 +6,7 @@ import CreateSale from "@/components/sales/CreateSale.vue";
 import ManufacturerPage from '@/components/manufacturer/ManufacturerPage.vue';
 import ProductPage from '@/components/product/ProductPage.vue';
 import ClientPage from "@/components/client/ClientPage.vue";
+import PaymentMethodPage from "@/components/payment-method/PaymentMethodPage.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
     path: "/clientes",
     name: "clientes",
     component: ClientPage,
+  },
+  {
+    path: "/metodo-pagamento",
+    name: "metodo-pagamento",
+    component: PaymentMethodPage,
   },
   {
     path: "*",
