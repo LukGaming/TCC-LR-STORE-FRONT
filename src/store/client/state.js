@@ -16,9 +16,9 @@ export const state = {
     },
   ],
   clientFormFields: {
-    clientName: "Paulo",
-    clientPhoneNumber: "64992753115",
-    clientCpf: "70198256132",
+    clientName: "",
+    clientPhoneNumber: "",
+    clientCpf: "",
   },
   clientErrorMessages: {
     clientName: "",

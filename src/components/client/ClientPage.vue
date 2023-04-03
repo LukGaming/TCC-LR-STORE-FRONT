@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <v-data-table
       :headers="headers"
       :items="clients"
@@ -14,25 +13,29 @@
           <v-spacer></v-spacer>
           <DefaultButton
             text_button="Adicionar Cliente"
-            @callback="openProductDialog({ edit: false })"
+            @callback="openClientDialog({ edit: false })"
           />
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
     </v-data-table>
-    <ClientForm />
+    <ClientDialog />
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
-    DefaultButton: () => import("@/components/utilities/DefaultBlackButton.vue"),
-    ClientForm: () => import("@/components/client/ClientForm.vue")
+    DefaultButton: () =>
+      import("@/components/utilities/DefaultBlackButton.vue"),
+    ClientDialog: () => import("@/components/client/ClientDialog.vue"),
   },
   methods: {
-    ...mapActions({getClients: "clientStore/getClients"}),
+    ...mapActions({
+      getClients: "clientStore/getClients",
+      openClientDialog: "clientStore/openClientDialog",
+    }),
   },
   computed: {
     ...mapGetters({
@@ -40,9 +43,9 @@ export default {
       headers: "clientStore/headers",
     }),
   },
-  created(){
+  created() {
     this.getClients();
-  }
+  },
 };
 </script>
 <style></style>

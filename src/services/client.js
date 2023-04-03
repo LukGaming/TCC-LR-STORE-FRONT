@@ -7,7 +7,6 @@ export async function createClient(clientName, clientPhoneNumber, clientCpf) {
   formData.append("cpf", clientCpf);
 
   var resposta = await $http.post("client", formData);
-  console.log(resposta);
   if (resposta.status == 201) {
     return resposta.data;
   }

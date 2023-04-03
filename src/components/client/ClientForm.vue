@@ -9,10 +9,11 @@
       @blur="validateFields('validateClientName')"
     >
     </v-text-field>
-    <ErrorAlertComponent
-      v-if="getClientErrorMessages.clientName != ''"
-      :errorMessage="getClientErrorMessages.clientName"
-    />
+      <ErrorAlertComponent
+        v-if="getClientErrorMessages.clientName != ''"
+        :errorMessage="getClientErrorMessages.clientName"
+      />
+    <div class="mt-5"></div>
     <v-text-field
       v-model="switchClientPhoneNumber"
       label="Telefone do Cliente"
@@ -21,10 +22,11 @@
       @blur="validateFields('validateClientPhoneNumber')"
     >
     </v-text-field>
-    <ErrorAlertComponent
-      v-if="getClientErrorMessages.clientPhoneNumber != ''"
-      :errorMessage="getClientErrorMessages.clientPhoneNumber"
-    />
+      <ErrorAlertComponent
+        v-if="getClientErrorMessages.clientPhoneNumber != ''"
+        :errorMessage="getClientErrorMessages.clientPhoneNumber"
+      />
+    <div class="mt-5"></div>
     <v-text-field
       v-model="switchClientCpf"
       label="Cpf do Cliente"
@@ -33,16 +35,15 @@
       @blur="validateFields('validateClientCpf')"
     >
     </v-text-field>
-    <ErrorAlertComponent
-      v-if="getClientErrorMessages.clientCpf != ''"
-      :errorMessage="getClientErrorMessages.clientCpf"
-    />
+      <ErrorAlertComponent
+        v-if="getClientErrorMessages.clientCpf != ''"
+        :errorMessage="getClientErrorMessages.clientCpf"
+      />
     <div class="mt-5"></div>
     <div class="d-flex justify-center">
       <DefaultButton text_button="Criar Cliente" @callback="createClient">
       </DefaultButton>
     </div>
-    {{ getClientErrorMessages }}
   </div>
 </template>
 <script>

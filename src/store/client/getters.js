@@ -10,6 +10,9 @@ export const getters = {
   },
   getClientErrorMessages(state){
     return state.clientErrorMessages;
+  },
+  clientDialog(state){
+    return state.clientDialog;
   }
 
 };

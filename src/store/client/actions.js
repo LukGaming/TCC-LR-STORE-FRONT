@@ -18,7 +18,8 @@ export const actions = {
   setClientFormFields({ commit }, payload) {
     commit("setClientFormFields", payload);
   },
-  async createClient({ state, commit }, payload) {
+  async createClient({ state, commit, dispatch }, payload) {
+    dispatch("validateFields", "validateAll");
     var canSendForm = verifyIfCanSendForm(
       state.clientFormFields.clientName,
       state.clientFormFields.clientPhoneNumber,
@@ -34,6 +35,7 @@ export const actions = {
         );
         commit("addNewClient", client);
         commit("clearClientForm");
+        commit("setClientDialog", false);
         let snackBarAlert = {
           showSnackBar: true,
           message: "Cliente criado com sucesso.",
@@ -107,12 +109,12 @@ export const actions = {
   setSelectedManufacturer({ commit }, payload) {
     commit("setSelectedManufacturer", payload);
   },
-  setProductDialog({ commit }, payload) {
-    commit("setProductDialog", payload);
+  setClientDialog({ commit }, payload) {
+    commit("setClientDialog", payload);
   },
-  openProductDialog({ commit }, payload) {
+  openClientDialog({ commit }, payload) {
     if (payload.edit == false) {
-      commit("setProductDialog", true);
+      commit("setClientDialog", true);
     }
   },
 };

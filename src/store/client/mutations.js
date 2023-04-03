@@ -11,17 +11,20 @@ export const mutations = {
   addNewClient(state, payload) {
     state.clients.push(payload);
   },
-  clearClientForm(state){
-    state.clientFormFields =  {
+  clearClientForm(state) {
+    state.clientFormFields = {
       clientName: "",
       clientPhoneNumber: "",
       clientCpf: "",
-    }
-    
-    state.clientErrorMessages= {
+    };
+
+    state.clientErrorMessages = {
       clientName: "",
       clientPhoneNumber: "",
       clientCpf: "",
-    }
-  }
+    };
+  },
+  setClientDialog(state, payload) {
+    state.clientDialog = payload;
+  },
 };
