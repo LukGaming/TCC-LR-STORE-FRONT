@@ -16,7 +16,7 @@
     <div class="mt-5"></div>
     <div class="d-flex justify-center">
       <DefaultButton
-        text_button="Criar Fabricante"
+        :text_button="isEditing ? 'Editar Fabricante' : 'Criar Fabricante'"
         @callback="createManufacturer"
       >
       </DefaultButton>
@@ -34,6 +34,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isEditing: "manufacturerStore/isEditing",
       manufacturerName: "manufacturerStore/manufacturerName",
       getManufacturerMessages: "manufacturerStore/getManufacturerMessages",
     }),

@@ -2,30 +2,26 @@ export const mutations = {
   setPaymentMethods(state, payload) {
     state.paymentMethods = payload;
   },
-  setClientFormFields(state, payload) {
-    state.clientFormFields[payload.part] = payload.value;
+  setPaymentMethodName(state, payload) {
+    state.paymentMethodName = payload;
   },
-  SetClientErrorMessages(state, payload) {
-    state.clientErrorMessages[payload.part] = payload.value;
+  SetPaymentMethodErrorMessages(state, payload) {
+    state.paymentMethodErrorMessages[payload.part] = payload.value;
   },
-  addNewClient(state, payload) {
-    state.clients.push(payload);
+  addNewPaymentMethod(state, payload) {
+    state.paymentMethods.push(payload);
   },
-  clearClientForm(state) {
-    state.clientFormFields = {
-      clientName: "",
-      clientPhoneNumber: "",
-      clientCpf: "",
+  clearPaymentMethodForm(state) {
+    state.paymentMethodsFormFields = {
+      paymentMethodName: "",
     };
 
-    state.clientErrorMessages = {
-      clientName: "",
-      clientPhoneNumber: "",
-      clientCpf: "",
-    };
+    state.paymentMethodName = "";
   },
   setClientDialog(state, payload) {
     state.clientDialog = payload;
   },
-  
+  setPaymentMethodDialog(state, payload){
+    state.paymentMethodDialog = payload;
+  }
 };

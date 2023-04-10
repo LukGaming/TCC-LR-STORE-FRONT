@@ -5,13 +5,16 @@ export const getters = {
   headers(state) {
     return state.headers;
   },
-  paymentMethodsFormFields(state) {
-    return state.paymentMethodsFormFields;
+  paymentMethodName(state) {
+    return state.paymentMethodName;
   },
-  getPaymentMethodsErrorMessages(state) {
-    return state.paymentMethodsErrorMessages;
+  paymentMethodErrorMessages(state) {
+    return state.paymentMethodErrorMessages;
   },
   paymentMethodDialog(state) {
     return state.paymentMethodDialog;
+  },
+  isEditing(state) {
+    return state.isEditing;
   },
 };

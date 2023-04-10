@@ -1,10 +1,11 @@
-import { createClient } from "@/services/client";
-import { getPaymentMethods } from "@/services/payment-method";
-
 import {
-  clientValidator,
-  verifyIfCanSendForm,
-} from "@/utils/messages/validators/client/ClientValidator";
+  createPaymentMethod,
+  getPaymentMethods,
+} from "@/services/payment-method";
+import {
+  paymentMethodValidator,
+  verifyIfCanSendPaymentMethodForm,
+} from "@/utils/messages/validators/payment-method/PaymentMethod";
 
 export const actions = {
   async getPaymentMethods({ commit }, payload) {
@@ -12,30 +13,22 @@ export const actions = {
     commit("setPaymentMethods", paymentMethods);
     return payload;
   },
-  setClientFormFields({ commit }, payload) {
-    commit("setClientFormFields", payload);
+  setPaymentMethodName({ commit }, payload) {
+    commit("setPaymentMethodName", payload);
   },
-  async createClient({ state, commit, dispatch }, payload) {
+  async createPaymentMethod({ state, commit, dispatch }, payload) {
     dispatch("validateFields", "validateAll");
-    var canSendForm = verifyIfCanSendForm(
-      state.clientFormFields.clientName,
-      state.clientFormFields.clientPhoneNumber,
-      state.clientFormFields.clientCpf
-    );
+    var canSendForm = verifyIfCanSendPaymentMethodForm(state.paymentMethodName);
 
     if (canSendForm) {
       try {
-        var client = await createClient(
-          state.clientFormFields.clientName,
-          state.clientFormFields.clientPhoneNumber,
-          state.clientFormFields.clientCpf
-        );
-        commit("addNewClient", client);
-        commit("clearClientForm");
-        commit("setClientDialog", false);
+        var paymentMethod = await createPaymentMethod(state.paymentMethodName);
+        commit("addNewPaymentMethod", paymentMethod);
+        commit("clearPaymentMethodForm");
+        commit("setPaymentMethodDialog", false);
         let snackBarAlert = {
           showSnackBar: true,
-          message: "Cliente criado com sucesso.",
+          message: "Método de pagamento criado com sucesso.",
           textColor: "white--color",
           color: "black",
         };
@@ -60,58 +53,36 @@ export const actions = {
   validateFields({ commit, state }, payload) {
     let order = 0;
     switch (payload) {
-      case "validateClientName":
+      case "validatePaymentMethodName":
         order = 1;
         break;
-      case "validateClientPhoneNumber":
-        order = 2;
-        break;
-      case "validateClientCpf":
-        order = 3;
-        break;
       case "validateAll":
-        order = 4;
+        order = 2;
         break;
       default:
         break;
     }
 
-    const [nameError, phoneNumberError, cpfError] = clientValidator(
-      state.clientFormFields.clientName,
-      state.clientFormFields.clientPhoneNumber,
-      state.clientFormFields.clientCpf
+    const [paymentMethodNameError] = paymentMethodValidator(
+      state.paymentMethodName
     );
 
     if (order >= 1) {
-      commit("SetClientErrorMessages", {
-        part: "clientName",
-        value: nameError,
-      });
-    }
-
-    if (order >= 2) {
-      commit("SetClientErrorMessages", {
-        part: "clientPhoneNumber",
-        value: phoneNumberError,
-      });
-    }
-
-    if (order >= 3) {
-      commit("SetClientErrorMessages", {
-        part: "clientCpf",
-        value: cpfError,
+      commit("SetPaymentMethodErrorMessages", {
+        part: "paymentMethodName",
+        value: paymentMethodNameError,
       });
     }
   },
   setSelectedManufacturer({ commit }, payload) {
     commit("setSelectedManufacturer", payload);
   },
-  setClientDialog({ commit }, payload) {
-    commit("setClientDialog", payload);
+  setPaymentMethodDialog({ commit }, payload) {
+    commit("setPaymentMethodDialog", payload);
   },
-  openClientDialog({ commit }, payload) {
+  openPaymentMethodDialog({ commit }, payload) {
     if (payload.edit == false) {
-      commit("setClientDialog", true);
+      commit("setPaymentMethodDialog", true);
     }
   },
 };

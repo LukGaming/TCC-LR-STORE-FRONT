@@ -14,4 +14,11 @@ export const mutations = {
   setManufacturerDialog(state, payload) {
     state.manufacturerDialog = payload;
   },
+  setIsEditing(state, payload) {
+    state.isEditing = payload;
+  },
+  setEditingManufacturer(state, payload) {
+    state.editingManufacturer = payload;
+  },
+
 };

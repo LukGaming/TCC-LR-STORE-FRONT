@@ -24,4 +24,7 @@ export const getters = {
     }
     return canSend;
   },
+  isEditing(state){
+    return state.isEditing;
+  }
 };

@@ -11,25 +11,50 @@ export const actions = {
   async createManufacturer({ commit, dispatch, getters, state }, payload) {
     dispatch("validateFields", "validateAll");
     var camSendForm = getters.canSendManufacturerForm;
+    const formData = new FormData();
+    formData.append("manufacture_name", state.manufacturerName);
     if (camSendForm) {
-      var formData = new FormData();
-      formData.append("manufacture_name", state.manufacturerName);
+      if (!state.isEditing) {
+        var response = await $http.post("manufacturer", formData);
+        if (response.status == 201) {
+          commit("addNewManufacturer", response.data);
+          dispatch("clearManufacturerForm");
+          commit("setManufacturerDialog", false);
+          let snackBarAlert = {
+            showSnackBar: true,
+            message: "Fabricante criada com sucesso.",
+            textColor: "white--color",
+            color: "black",
+          };
 
-      var response = await $http.post("manufacturer", formData);
-      if (response.status == 201) {
-        commit("addNewManufacturer", response.data);
-        dispatch("clearManufacturerForm");
-        commit("setManufacturerDialog", false);
-        let snackBarAlert = {
-          showSnackBar: true,
-          message: "Fabricante criada com sucesso.",
-          textColor: "white--color",
-          color: "black",
-        };
+          commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+            root: true,
+          });
+        }
+      } else {
+        let patchFormData = new FormData();
+        patchFormData.append("manufacture_name", state.manufacturerName);
 
-        commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
-          root: true,
-        });
+        var responsePatch = await $http.put(
+          `manufacturer/${state.editingManufacturer.id}`,
+          { manufacture_name: state.manufacturerName }
+        );
+
+        if (responsePatch.status == 200) {
+          dispatch("getManufacturers");
+          dispatch("clearManufacturerForm");
+          commit("setManufacturerDialog", false);
+          let snackBarAlert = {
+            showSnackBar: true,
+            message: "Fabricante editado com sucesso.",
+            textColor: "white--color",
+            color: "black",
+          };
+
+          commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+            root: true,
+          });
+        }
       }
     }
 
@@ -75,6 +100,13 @@ export const actions = {
   openManufacturerDialog({ commit }, payload) {
     if (payload.edit == false) {
       commit("setManufacturerDialog", true);
+      commit("setIsEditing", false);
+      commit("setManufacturerName", "");
+    } else {
+      commit("setIsEditing", true);
+      commit("setManufacturerName", payload.item.manufacture_name);
+      commit("setManufacturerDialog", true);
+      commit("setEditingManufacturer", payload.item);
     }
   },
   clearManufacturerForm({ commit }) {

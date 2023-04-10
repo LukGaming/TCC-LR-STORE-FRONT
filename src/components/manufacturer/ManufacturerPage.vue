@@ -20,10 +20,16 @@
         </v-toolbar>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <DefaultButton
-          text_button="Detalhes"
-          @callback="goToSaleDetails(item)"
-        />
+        <div>
+          <v-icon
+            class="mr-2"
+            color="black"
+            @click="openManufacturerDialog({ edit: true, item: item })"
+          >
+            mdi-pencil
+          </v-icon>
+          <v-icon @click="deleteItem(item)" color="black"> mdi-delete </v-icon>
+        </div>
       </template>
     </v-data-table>
 

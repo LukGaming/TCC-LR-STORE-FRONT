@@ -22,6 +22,9 @@
           <v-list-item>
             <v-list-item-title><div @click="goToClients()">Clientes</div></v-list-item-title>
           </v-list-item>
+          <v-list-item>
+            <v-list-item-title><div @click="goToPaymentMethod()">Métodos de Pagamento</div></v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
       <div class="d-flex justify-center mt-auto">
@@ -67,6 +70,9 @@ export default {
     },
     goToClients(){
       this.$router.push('/clientes');
+    },
+    goToPaymentMethod(){
+      this.$router.push('/metodo-pagamento');
     },
   },
 };

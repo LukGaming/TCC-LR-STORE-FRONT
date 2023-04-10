@@ -3,7 +3,9 @@
     <v-dialog v-model="switchDialog" persistent>
       <v-card>
         <div class="d-flex justify-center pt-5">
-          <span class="text-h5">Criando Fabricante</span>
+          <span class="text-h5">{{
+            isEditing ? "Editando Fabricante" : "Criando Fabricante"
+          }}</span>
         </div>
         <v-container><CreateManufacturerForm /></v-container>
 
@@ -36,6 +38,7 @@ export default {
   computed: {
     ...mapGetters({
       manufacturerDialog: "manufacturerStore/manufacturerDialog",
+      isEditing: "manufacturerStore/isEditing",
     }),
     switchDialog: {
       get() {
