@@ -14,16 +14,33 @@
           active-class="deep-purple--text text--accent-4"
         >
           <v-list-item>
-            <v-list-item-title><div @click="goToManufacturer()">Fabricantes</div></v-list-item-title>
+            <v-list-item-title
+              ><div @click="goToHome()">Página inicial</div></v-list-item-title
+            >
           </v-list-item>
           <v-list-item>
-            <v-list-item-title><div @click="goToProducts()">Produtos</div></v-list-item-title>
+            <v-list-item-title
+              ><div @click="goToManufacturer()">
+                Fabricantes
+              </div></v-list-item-title
+            >
           </v-list-item>
           <v-list-item>
-            <v-list-item-title><div @click="goToClients()">Clientes</div></v-list-item-title>
+            <v-list-item-title
+              ><div @click="goToProducts()">Produtos</div></v-list-item-title
+            >
           </v-list-item>
           <v-list-item>
-            <v-list-item-title><div @click="goToPaymentMethod()">Métodos de Pagamento</div></v-list-item-title>
+            <v-list-item-title
+              ><div @click="goToClients()">Clientes</div></v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title
+              ><div @click="goToPaymentMethod()">
+                Métodos de Pagamento
+              </div></v-list-item-title
+            >
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -45,12 +62,6 @@ export default {
     return {
       drawer: false,
       group: null,
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" },
-      ],
     };
   },
   watch: {
@@ -62,17 +73,20 @@ export default {
     ...mapActions({
       logout: "userStore/logout",
     }),
-    goToManufacturer(){
-      this.$router.push('/fabricantes');
+    goToManufacturer() {
+      this.$router.push("/fabricantes");
     },
-    goToProducts(){
-      this.$router.push('/produtos');
+    goToProducts() {
+      this.$router.push("/produtos");
     },
-    goToClients(){
-      this.$router.push('/clientes');
+    goToClients() {
+      this.$router.push("/clientes");
     },
-    goToPaymentMethod(){
-      this.$router.push('/metodo-pagamento');
+    goToPaymentMethod() {
+      this.$router.push("/metodo-pagamento");
+    },
+    goToHome() {
+      this.$router.push("/home");
     },
   },
 };

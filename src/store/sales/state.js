@@ -13,4 +13,20 @@ export const state = {
     { text: "Usuário", value: "user.user_name", },
     { text: "Ações", value: "actions" },
   ],
+  salesFormFields: {
+    serial_number: "",
+    quantity: 1,
+    unity_value: 0,
+    selectedProduct: "",
+    selectedPaymentMethod: "",
+    selectedClient: "",
+  },
+  salesErrorMessages: {
+    serial_number: "",
+    quantity: "",
+    unity_value: "",
+    selectedProduct: "",
+    selectedPaymentMethod: "",
+    selectedClient: "",
+  }
 };
