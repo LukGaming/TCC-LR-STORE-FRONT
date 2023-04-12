@@ -24,12 +24,7 @@ export default {
       isLogged: "userStore/isLogged",
     }),
   },
-  created() {
-    console.log(this.isLogged);
-    if (this.isLogged) {
-      this.$router.push("/home");
-    }
-  },
+  created() {},
 };
 </script>
 <style lang="scss"></style>

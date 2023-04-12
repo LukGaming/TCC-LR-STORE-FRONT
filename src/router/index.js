@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store/index";
 import Login from "../views/login/LoginScreen.vue";
 import HomePage from "@/components/home/Home-Page.vue";
 import CreateSale from "@/components/sales/CreateSaleForm.vue";
@@ -19,31 +20,49 @@ const routes = [
     path: "/home",
     name: "home",
     component: HomePage,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/vendas",
     name: "vendas",
     component: CreateSale,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/fabricantes",
     name: "fabricantes",
     component: ManufacturerPage,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/produtos",
     name: "produtos",
     component: ProductPage,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/clientes",
     name: "clientes",
     component: ClientPage,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/metodo-pagamento",
     name: "metodo-pagamento",
     component: PaymentMethodPageVue,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "*",
@@ -55,6 +74,26 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  let isLogged = store.state.userStore.isLogged;
+
+  let path = to.matched[0].path;
+
+  if (path == "/login" && isLogged) {
+    next("/home");
+  }
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (isLogged) {
+      next();
+    } else {
+      next("/login");
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

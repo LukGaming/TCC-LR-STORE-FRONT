@@ -10,7 +10,7 @@ export const state = {
     { text: "Quantidade", value: "quantity" },
     { text: "Cliente", value: "client.full_name" },
     { text: "Método de pagamento", value: "payment_method.name" },
-    { text: "Usuário", value: "user.user_name", },
+    { text: "Usuário", value: "user.user_name" },
     { text: "Ações", value: "actions" },
   ],
   salesFormFields: {
@@ -20,14 +20,15 @@ export const state = {
     selectedProduct: "",
     selectedPaymentMethod: "",
     selectedClient: "",
-    saleDate: "12/04/2023"
+    saleDate: "",
   },
   salesErrorMessages: {
-    serialNumber: "",
-    quantity: "",
-    unityValue: "",
-    selectedProduct: "",
-    selectedPaymentMethod: "",
-    selectedClient: "",
-  }
+    serialNumber: "O número de série não pode ficar vazio.",
+    quantity: "A quantidade não pode ser 0.",
+    unityValue: "O valor não pode ser 0.",
+    selectedProduct: "Você precisa selecionar um Produto.",
+    selectedPaymentMethod: "Você precisa selecionar um Método de Pagamento.",
+    selectedClient: "Você precisa selecionar um Cliente.",
+    saleDate: "Por favor, selecione uma Data.",
+  },
 };

@@ -22,7 +22,7 @@ function validateClientCpf(cpf) {
   return cpf == null || cpf == "" ? "O campo de Cpf não pode ficar vazio" : "";
 }
 
-export function verifyIfCanSendForm(name, phoneNumber, cpf) {
+export function verifyIfCanSendClientForm(name, phoneNumber, cpf) {
   let [nameError, phoneError, cpfError] = clientValidator(
     name,
     phoneNumber,

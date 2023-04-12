@@ -2,7 +2,7 @@ import $http from "@/plugins/axios";
 import { createClient } from "@/services/client";
 import {
   clientValidator,
-  verifyIfCanSendForm,
+  verifyIfCanSendClientForm,
 } from "@/utils/messages/validators/client/ClientValidator";
 
 export const actions = {
@@ -18,7 +18,7 @@ export const actions = {
   },
   async createClient({ state, commit, dispatch }, payload) {
     dispatch("validateFields", "validateAll");
-    var canSendForm = verifyIfCanSendForm(
+    var canSendForm = verifyIfCanSendClientForm(
       state.clientFormFields.clientName,
       state.clientFormFields.clientPhoneNumber,
       state.clientFormFields.clientCpf
