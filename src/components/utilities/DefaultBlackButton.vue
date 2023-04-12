@@ -14,7 +14,6 @@ export default {
   },
   methods: {
     callback() {
-      console.log("calll back do botão");
       this.$emit("callback");
     },
   },

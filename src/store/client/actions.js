@@ -8,8 +8,6 @@ import {
 export const actions = {
   async getClients({ commit }, payload) {
     var response = await $http.get("client");
-    console.log("buscando clientes");
-    console.log(response.data);
     if (response.status == 200) {
       commit("setClients", response.data);
     }

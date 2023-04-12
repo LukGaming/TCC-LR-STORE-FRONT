@@ -4,6 +4,5 @@ export const mutations = {
   },
   setSaleFormField(state, payload) {
     state.salesFormFields[payload.part] = payload.value;
-    console.log(state.salesFormFields)
   },
 };

@@ -14,17 +14,18 @@ export const state = {
     { text: "Ações", value: "actions" },
   ],
   salesFormFields: {
-    serial_number: "",
+    serialNumber: "",
     quantity: 1,
-    unity_value: 0,
+    unityValue: 0,
     selectedProduct: "",
     selectedPaymentMethod: "",
     selectedClient: "",
+    saleDate: "12/04/2023"
   },
   salesErrorMessages: {
-    serial_number: "",
+    serialNumber: "",
     quantity: "",
-    unity_value: "",
+    unityValue: "",
     selectedProduct: "",
     selectedPaymentMethod: "",
     selectedClient: "",
