@@ -4,7 +4,10 @@
       <SnackBarMessage />
       <DefaultLoading v-if="isLoading" />
       <div v-if="!isLogged"><router-view /></div>
-      <div v-if="isLogged"><NavigationDrawer></NavigationDrawer></div>
+      <div v-if="isLogged">
+        <NavigationDrawer></NavigationDrawer>
+       
+      </div>
     </v-app>
   </div>
 </template>

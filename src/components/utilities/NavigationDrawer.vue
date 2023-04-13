@@ -1,17 +1,16 @@
 <template>
-  <v-card class="mx-auto overflow-hidden" height="100vh" width="100vw">
+  <div>
     <v-app-bar color="black" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
     </v-app-bar>
-    <v-container>
-      <router-view />
-    </v-container>
-    <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+
+    <v-navigation-drawer v-model="drawer" absolute temporary height="100%">
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
           active-class="deep-purple--text text--accent-4"
+          class="justify-end"
         >
           <v-list-item>
             <v-list-item-title
@@ -42,14 +41,27 @@
               </div></v-list-item-title
             >
           </v-list-item>
+          <v-list-item>
+            <v-list-item-title>
+              <div>
+                <DefaultBlackButton
+                  text_button="Deslogar"
+                  @callback="logout"
+                ></DefaultBlackButton>
+              </div>
+            </v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
-      <div class="d-flex justify-center mt-auto">
-        <DefaultBlackButton text_button="Deslogar" @callback="logout">
-        </DefaultBlackButton>
-      </div>
     </v-navigation-drawer>
-  </v-card>
+    <v-main>
+      <div style="height: auto">
+        <v-container>
+          <router-view />
+        </v-container>
+      </div>
+    </v-main>
+  </div>
 </template>
 <script>
 import { mapActions } from "vuex";
