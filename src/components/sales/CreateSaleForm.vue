@@ -15,12 +15,14 @@
         v-if="salesErrorMessages.serialNumber != ''"
         :errorMessage="salesErrorMessages.serialNumber"
       />
-
+      <div class="mt-5"></div>
       <v-text-field
         v-model="switchQuantity"
         label="Quantidade"
         hide-details
         outlined
+        type="number"
+        min="1"
         @blur="validateFields('validateQuantity')"
       >
       </v-text-field>
@@ -104,6 +106,11 @@
       <div class="mt-5"></div>
 
       <DatePickerComponent />
+
+      <ErrorAlertComponent
+        v-if="salesErrorMessages.saleDate != ''"
+        :errorMessage="salesErrorMessages.saleDate"
+      />
 
       {{ salesFormFields }}
 
@@ -206,7 +213,7 @@ export default {
     ...mapActions({
       getPaymentMethods: "paymentMethodStore/getPaymentMethods",
       getProducts: "productStore/getProducts",
-      validateFields: "paymentMethodStore/validateFields",
+      validateFields: "salesStore/validateFields",
       setSaleFormField: "salesStore/setSaleFormField",
       createSale: "salesStore/createSale",
       getClients: "clientStore/getClients",

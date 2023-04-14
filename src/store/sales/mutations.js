@@ -5,4 +5,7 @@ export const mutations = {
   setSaleFormField(state, payload) {
     state.salesFormFields[payload.part] = payload.value;
   },
+  setSalesErrorMessages(state, payload) {
+    state.salesErrorMessages[payload.part] = payload.value;
+  },
 };

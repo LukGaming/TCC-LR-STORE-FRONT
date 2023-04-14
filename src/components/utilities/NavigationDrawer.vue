@@ -44,10 +44,7 @@
           <v-list-item>
             <v-list-item-title>
               <div>
-                <DefaultBlackButton
-                  text_button="Deslogar"
-                  @callback="logout"
-                ></DefaultBlackButton>
+                <DefaultBlackButton text_button="Deslogar" @callback="logout" />
               </div>
             </v-list-item-title>
           </v-list-item>

@@ -84,6 +84,10 @@ export default {
         .toISOString()
         .substr(0, 10)
     );
+    this.setSaleFormField({
+      part: "saleDate",
+      value: this.dateFormatted,
+    });
   },
 };
 </script>
