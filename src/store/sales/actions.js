@@ -6,6 +6,14 @@ import {
 } from "@/utils/messages/validators/sales/sale-validator";
 
 export const actions = {
+  addSerialNumber({ commit }, payload) {
+    commit("addSerialNumber");
+    return commit, payload;
+  },
+  removeSerialNumber({ commit }, payload) {
+    commit("removeSerialNumber");
+    return commit, payload;
+  },
   async getSales({ commit }, payload) {
     var response = await $http.get("getAllSales");
     if (response.status == 200) {
@@ -159,4 +167,9 @@ export const actions = {
     }
     return commit, payload;
   },
+  validateSerialNumbers({commit, state, payload}){
+    console.log(state.salesFormFields)
+    return commit, state, payload;
+  }
 };
+

@@ -8,7 +8,19 @@ export const mutations = {
   setSalesErrorMessages(state, payload) {
     state.salesErrorMessages[payload.part] = payload.value;
   },
-  addNewSale(state,payload){
+  addNewSale(state, payload) {
     state.sales.push(payload);
-  }
+  },
+  addSerialNumber(state) {
+    if (state.salesFormFields.quantity < 10) {
+      state.salesFormFields.quantity++;
+      state.salesErrorMessages.serialNumbers.push("")
+    }
+  },
+  removeSerialNumber(state) {
+    if (state.salesFormFields.quantity > 1) {
+      state.salesFormFields.quantity--;
+      state.salesErrorMessages.serialNumbers.pop()
+    }
+  },
 };

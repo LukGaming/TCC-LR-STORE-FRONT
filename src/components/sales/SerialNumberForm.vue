@@ -11,14 +11,23 @@
           v-model="computedValues[index]"
           @input="setFieldValues($event, index)"
         />
-        {{ fields }}
+        <ErrorAlertComponent
+          v-if="salesErrorMessages.serialNumbers[index]"
+          :errorMessage="salesErrorMessages.serialNumbers[index]"
+        />
+        {{ salesErrorMessages.serialNumbers[index] }}
+        {{ salesFormFields.serialNumber }}
         <div class="mt-5"></div>
       </div>
-
-      <!-- <div class="d-flex justify-center">
-          <DefaultButton text_button="Criar Venda" @callback="createSale">
-          </DefaultButton>
-        </div> -->
+        
+        
+      <div class="d-flex justify-center">
+        <DefaultButton
+          text_button="Concluido"
+          @callback="validateSerialNumbers()"
+        >
+        </DefaultButton>
+      </div>
     </v-container>
   </div>
 </template>
@@ -31,15 +40,16 @@ export default {
     };
   },
   components: {
-    // DefaultButton: () =>
-    //   import("@/components/utilities/DefaultBlackButton.vue"),
-    // ErrorAlertComponent: () =>
-    //   import("@/components/utilities/ErrorAlertComponent.vue"),
+    DefaultButton: () =>
+      import("@/components/utilities/DefaultBlackButton.vue"),
+    ErrorAlertComponent: () =>
+      import("@/components/utilities/ErrorAlertComponent.vue"),
   },
   computed: {
     ...mapGetters({
       salesFormFields: "salesStore/salesFormFields",
       salesErrorMessages: "salesStore/salesErrorMessages",
+      // setSerialNumbersField: "salesStore/salesErrorMessages",
     }),
     quantity() {
       let quantity = [];
@@ -54,14 +64,17 @@ export default {
   },
   mounted() {
     this.fields = new Array(this.salesFormFields.quantity).fill("");
+    this.setSaleFormField({ part: "serialNumber", value: this.fields });
   },
   methods: {
     ...mapActions({
       validateFields: "salesStore/validateFields",
       setSaleFormField: "salesStore/setSaleFormField",
+      validateSerialNumbers: "salesStore/validateSerialNumbers"
     }),
     setFieldValues($event, index) {
       this.fields.splice(index, 1, $event);
+      this.setSaleFormField({ part: "serialNumber", value: this.fields });
     },
   },
 };

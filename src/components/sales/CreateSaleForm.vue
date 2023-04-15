@@ -5,20 +5,38 @@
       <SerialNumberForm />
 
       <div class="mt-5"></div>
-      <v-text-field
-        v-model="switchQuantity"
-        label="Quantidade"
-        hide-details
-        outlined
-        type="number"
-        min="1"
-        @blur="validateFields('validateQuantity')"
-      >
-      </v-text-field>
-      <ErrorAlertComponent
+      <v-row no-gutters>
+        <v-col xl="1" lg="1">
+          <v-text-field
+          readonly
+            v-model="switchQuantity"
+            label="Quantidade"
+            hide-details
+            outlined
+            type="number"
+            min="1"
+            @blur="validateFields('validateQuantity')"
+          >
+          </v-text-field>
+        </v-col>
+        <v-col xlg="3" class="ml-2">
+          <v-row no-gutters>
+            <v-btn color="black" small @click="addSerialNumber()">
+              <v-icon color="white">mdi-plus</v-icon>
+            </v-btn>
+          </v-row>
+          <v-row no-gutters class="mt-1">
+            <v-btn color="black" small @click="removeSerialNumber()">
+              <v-icon color="white">mdi-minus</v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
+
+      <!-- <ErrorAlertComponent
         v-if="salesErrorMessages.quantity != ''"
         :errorMessage="salesErrorMessages.quantity"
-      />
+      /> -->
       <div class="mt-5"></div>
 
       <v-text-field
@@ -191,6 +209,8 @@ export default {
       setSaleFormField: "salesStore/setSaleFormField",
       createSale: "salesStore/createSale",
       getClients: "clientStore/getClients",
+      addSerialNumber: "salesStore/addSerialNumber",
+      removeSerialNumber: "salesStore/removeSerialNumber"
     }),
   },
   created() {

@@ -14,7 +14,7 @@ export const state = {
     { text: "Ações", value: "actions" },
   ],
   salesFormFields: {
-    serialNumber: "",
+    serialNumbers: [],
     quantity: 1,
     unityValue: 0,
     selectedProduct: "",
@@ -23,7 +23,7 @@ export const state = {
     saleDate: "",
   },
   salesErrorMessages: {
-    serialNumber: "",
+    serialNumbers: [""],
     quantity: "",
     unityValue: "",
     selectedProduct: "",
