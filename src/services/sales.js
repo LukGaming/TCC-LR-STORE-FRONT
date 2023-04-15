@@ -25,5 +25,5 @@ export async function createSale(
   if (response.status == 201) {
     return response.data;
   }
-  throw new Error(response.data);
+  throw new Error(response.statusText);
 }

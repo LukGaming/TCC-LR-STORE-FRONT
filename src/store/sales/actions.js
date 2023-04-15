@@ -14,7 +14,6 @@ export const actions = {
     return payload;
   },
   async createSale({ dispatch, state, commit, rootState }) {
-    
     dispatch("validateFields", "validateAll");
     var canSendForm = canSendSaleForm(
       state.salesFormFields.serialNumber,
@@ -25,6 +24,7 @@ export const actions = {
       state.salesFormFields.selectedClient,
       state.salesFormFields.saleDate
     );
+    
     if (canSendForm) {
       try {
         var userId = rootState.userStore.user.id;

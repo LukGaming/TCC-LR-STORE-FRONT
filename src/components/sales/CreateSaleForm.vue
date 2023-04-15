@@ -2,19 +2,8 @@
   <div>
     <v-container>
       <div class="mt-5"></div>
+      <SerialNumberForm />
 
-      <v-text-field
-        v-model="switchSerialNumber"
-        label="Número de Série"
-        hide-details
-        outlined
-        @blur="validateFields('validateSerialNumber')"
-      >
-      </v-text-field>
-      <ErrorAlertComponent
-        v-if="salesErrorMessages.serialNumber != ''"
-        :errorMessage="salesErrorMessages.serialNumber"
-      />
       <div class="mt-5"></div>
       <v-text-field
         v-model="switchQuantity"
@@ -134,6 +123,7 @@ export default {
       import("@/components/utilities/ErrorAlertComponent.vue"),
     DatePickerComponent: () =>
       import("@/components/sales/DatePickerComponent.vue"),
+    SerialNumberForm: () => import("@/components/sales/SerialNumberForm.vue"),
   },
   computed: {
     ...mapGetters({
@@ -190,22 +180,6 @@ export default {
       set(value) {
         this.setSaleFormField({ part: "selectedClient", value: value });
       },
-    },
-    height() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return 220;
-        case "sm":
-          return 400;
-        case "md":
-          return 500;
-        case "lg":
-          return 600;
-        case "xl":
-          return 800;
-        default:
-          return null;
-      }
     },
   },
 
