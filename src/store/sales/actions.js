@@ -1,5 +1,9 @@
 import $http from "@/plugins/axios";
-import { salesValidator } from "@/utils/messages/validators/sales/sale-validator";
+import { createSale } from "@/services/sales";
+import {
+  canSendSaleForm,
+  salesValidator,
+} from "@/utils/messages/validators/sales/sale-validator";
 
 export const actions = {
   async getSales({ commit }, payload) {
@@ -9,7 +13,56 @@ export const actions = {
     }
     return payload;
   },
-  async createSale() {},
+  async createSale({ dispatch, state, commit, rootState }) {
+    
+    dispatch("validateFields", "validateAll");
+    var canSendForm = canSendSaleForm(
+      state.salesFormFields.serialNumber,
+      state.salesFormFields.quantity,
+      state.salesFormFields.unityValue,
+      state.salesFormFields.selectedProduct,
+      state.salesFormFields.selectedPaymentMethod,
+      state.salesFormFields.selectedClient,
+      state.salesFormFields.saleDate
+    );
+    if (canSendForm) {
+      try {
+        var userId = rootState.userStore.user.id;
+        var sale = await createSale(
+          state.salesFormFields.serialNumber,
+          state.salesFormFields.quantity,
+          state.salesFormFields.unityValue,
+          state.salesFormFields.selectedProduct,
+          state.salesFormFields.selectedPaymentMethod,
+          state.salesFormFields.selectedClient,
+          state.salesFormFields.saleDate,
+          userId,
+        );
+        commit("addNewSale", sale);
+        let snackBarAlert = {
+          showSnackBar: true,
+          message: "Venda criada com sucesso.",
+          textColor: "white--color",
+          color: "black",
+        };
+
+        commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+          root: true,
+        });
+      } catch (e) {
+        let snackBarAlert = {
+          showSnackBar: true,
+          message: e,
+          textColor: "red--color",
+          color: "white",
+        };
+
+        commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
+          root: true,
+        });
+      }
+    }
+  },
   setSaleFormField({ commit }, payload) {
     commit("setSaleFormField", payload);
   },
@@ -106,5 +159,4 @@ export const actions = {
     }
     return commit, payload;
   },
-  
 };

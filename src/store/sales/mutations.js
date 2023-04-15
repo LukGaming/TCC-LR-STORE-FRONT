@@ -8,4 +8,7 @@ export const mutations = {
   setSalesErrorMessages(state, payload) {
     state.salesErrorMessages[payload.part] = payload.value;
   },
+  addNewSale(state,payload){
+    state.sales.push(payload);
+  }
 };

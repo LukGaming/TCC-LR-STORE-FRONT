@@ -56,3 +56,29 @@ export function validateSelectedClient(selectedClient) {
 export function validateSaleDate(saleDate) {
   return saleDate == null || saleDate == "" ? "Selecione uma Data." : "";
 }
+
+export function canSendSaleForm(
+  serialNumber,
+  quantity,
+  unityValue,
+  selectedProduct,
+  selectedPaymentMethod,
+  selectedClient,
+  saleDate
+) {
+  var fields = salesValidator(
+    serialNumber,
+    quantity,
+    unityValue,
+    selectedProduct,
+    selectedPaymentMethod,
+    selectedClient,
+    saleDate
+  );
+  for (var i = 0; i < fields.length; i++) {
+    if (fields[i] != "") {
+      return false;
+    }
+  }
+  return true;
+}
