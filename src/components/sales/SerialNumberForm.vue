@@ -1,35 +1,49 @@
 <template>
-  <div>
-    <v-container>
-      <div class="mt-5"></div>
+  <v-row justify="center">
+    <v-dialog v-model="switchDialog" persistent>
+      <v-card>
+        <div class="d-flex justify-center pt-5">
+          <span class="text-h5">Adicionando Números de Série</span>
+        </div>
+        <v-container>
+          <div class="mt-5"></div>
 
-      <div v-for="index in quantity" :key="index">
-        <v-text-field
-          :label="`Número de série  ${index + 1}`"
-          hide-details
-          outlined
-          v-model="computedValues[index]"
-          @input="setFieldValues($event, index)"
-        />
-        <ErrorAlertComponent
-          v-if="salesErrorMessages.serialNumbers[index]"
-          :errorMessage="salesErrorMessages.serialNumbers[index]"
-        />
-        {{ salesErrorMessages.serialNumbers[index] }}
-        {{ salesFormFields.serialNumber }}
-        <div class="mt-5"></div>
-      </div>
-        
-        
-      <div class="d-flex justify-center">
-        <DefaultButton
-          text_button="Concluido"
-          @callback="validateSerialNumbers()"
-        >
-        </DefaultButton>
-      </div>
-    </v-container>
-  </div>
+          <div v-for="(item, index) in quantity" :key="index" :index="index">
+            <v-text-field
+              :label="`Número de série  ${index + 1}`"
+              hide-details
+              outlined
+              v-model="fields[index]"
+              @input="setFieldValues($event, index)"
+              @blur="blurSerialNumbers($event, index)"
+            />
+            <ErrorAlertComponent
+              v-if="salesErrorMessages.serialNumbers[index] != ''"
+              :errorMessage="salesErrorMessages.serialNumbers[index]"
+            />
+            <div class="mt-5"></div>
+          </div>
+          {{ salesFormFields.serialNumbers }}
+          {{ salesErrorMessages.serialNumbers }}
+          <div class="d-flex justify-center">
+            <DefaultButton
+              text_button="Concluido"
+              @callback="validateAllSerialNumbers(fields)"
+            >
+            </DefaultButton>
+          </div>
+        </v-container>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <DefaultButton
+            text_button="fechar"
+            @callback="setSerialNumbersDialog(false)"
+          />
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
@@ -46,11 +60,14 @@ export default {
       import("@/components/utilities/ErrorAlertComponent.vue"),
   },
   computed: {
-    ...mapGetters({
-      salesFormFields: "salesStore/salesFormFields",
-      salesErrorMessages: "salesStore/salesErrorMessages",
-      // setSerialNumbersField: "salesStore/salesErrorMessages",
-    }),
+    switchDialog: {
+      get() {
+        return this.serialNumbersDialog;
+      },
+      set(value) {
+        this.setSerialNumbersDialog(value);
+      },
+    },
     quantity() {
       let quantity = [];
       for (var i = 0; i < this.salesFormFields.quantity; i++) {
@@ -61,21 +78,51 @@ export default {
     computedValues() {
       return [...this.fields];
     },
+    ...mapGetters({
+      salesFormFields: "salesStore/salesFormFields",
+      salesErrorMessages: "salesStore/salesErrorMessages",
+      serialNumbersDialog: "salesStore/serialNumbersDialog",
+    }),
   },
-  mounted() {
-    this.fields = new Array(this.salesFormFields.quantity).fill("");
-    this.setSaleFormField({ part: "serialNumber", value: this.fields });
-  },
+
   methods: {
     ...mapActions({
       validateFields: "salesStore/validateFields",
       setSaleFormField: "salesStore/setSaleFormField",
-      validateSerialNumbers: "salesStore/validateSerialNumbers"
+      validateSerialNumbers: "salesStore/validateSerialNumbers",
+      setSerialNumbersDialog: "salesStore/setSerialNumbersDialog",
+      setSerialNumbers: "salesStore/setSerialNumbers",
+      setfirstSerialNumbers: "salesStore/setfirstSerialNumbers",
+      concludeSerialNumbers: "salesStore/concludeSerialNumbers"
     }),
-    setFieldValues($event, index) {
-      this.fields.splice(index, 1, $event);
-      this.setSaleFormField({ part: "serialNumber", value: this.fields });
+    blurSerialNumbers($event, index) {
+      this.validateSerialNumbers({
+        value: $event.target.value,
+        index: index,
+      });
+      this.fields.splice(index, 1, $event.target.value);
     },
+    validateAllSerialNumbers() {
+      for (var i = 0; i < this.fields.length; i++) {
+        this.validateSerialNumbers({
+          value: this.fields[i],
+          index: i,
+        });
+        this.fields.splice(i, 1, this.fields[i]);
+      }
+      this.concludeSerialNumbers();
+    },
+    setFieldValues($event, index) {
+      this.setSerialNumbers({ index: index, value: $event });
+      this.fields.splice(index, 1, $event);
+    },
+    getSerialNumberValue(index) {
+      return this.salesFormFields.serialNumbers[index];
+    },
+  },
+  mounted() {
+    this.fields = new Array(this.salesFormFields.quantity).fill("");
+    this.setfirstSerialNumbers(this.fields);
   },
 };
 </script>

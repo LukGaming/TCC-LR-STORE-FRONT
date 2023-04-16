@@ -8,7 +8,7 @@
       <v-row no-gutters>
         <v-col xl="1" lg="1">
           <v-text-field
-          readonly
+            readonly
             v-model="switchQuantity"
             label="Quantidade"
             hide-details
@@ -32,6 +32,11 @@
           </v-row>
         </v-col>
       </v-row>
+      <div class="mt-5"></div>
+      <DefaultButton
+        text_button="Preencher Números de Série"
+        @callback="setSerialNumbersDialog(true)"
+      />
 
       <!-- <ErrorAlertComponent
         v-if="salesErrorMessages.quantity != ''"
@@ -210,7 +215,8 @@ export default {
       createSale: "salesStore/createSale",
       getClients: "clientStore/getClients",
       addSerialNumber: "salesStore/addSerialNumber",
-      removeSerialNumber: "salesStore/removeSerialNumber"
+      removeSerialNumber: "salesStore/removeSerialNumber",
+      setSerialNumbersDialog: "salesStore/setSerialNumbersDialog",
     }),
   },
   created() {

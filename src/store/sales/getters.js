@@ -11,4 +11,13 @@ export const getters = {
   salesErrorMessages(state) {
     return state.salesErrorMessages;
   },
+  serialNumbersDialog(state){
+    return state.serialNumbersDialog;
+  },
+  serialNumbers(state){
+    return state.salesFormFields.serialNumbers
+  },
+  showContent(state){
+    return state.showContent
+  }
 };

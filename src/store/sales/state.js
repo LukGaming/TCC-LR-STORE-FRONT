@@ -31,4 +31,6 @@ export const state = {
     selectedClient: "",
     saleDate: "",
   },
+  serialNumbersDialog: true,
+  showContent: true,
 };

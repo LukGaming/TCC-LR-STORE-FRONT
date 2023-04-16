@@ -4,6 +4,7 @@ import {
   canSendSaleForm,
   salesValidator,
 } from "@/utils/messages/validators/sales/sale-validator";
+import { CanCloseSerialNumbersForm } from "@/utils/messages/validators/sales/sales-serial-number-validator";
 
 export const actions = {
   addSerialNumber({ commit }, payload) {
@@ -32,7 +33,7 @@ export const actions = {
       state.salesFormFields.selectedClient,
       state.salesFormFields.saleDate
     );
-    
+
     if (canSendForm) {
       try {
         var userId = rootState.userStore.user.id;
@@ -44,7 +45,7 @@ export const actions = {
           state.salesFormFields.selectedPaymentMethod,
           state.salesFormFields.selectedClient,
           state.salesFormFields.saleDate,
-          userId,
+          userId
         );
         commit("addNewSale", sale);
         let snackBarAlert = {
@@ -167,9 +168,46 @@ export const actions = {
     }
     return commit, payload;
   },
-  validateSerialNumbers({commit, state, payload}){
-    console.log(state.salesFormFields)
-    return commit, state, payload;
+  validateSerialNumbers({ commit }, payload) {
+    let errorMessage = "";
+    errorMessage =
+      payload.value == null || payload.value == ""
+        ? "O Número de série não pode ficar vazio."
+        : "";
+    commit("setSerialNumberErrorMessages", {
+      index: payload.index,
+      value: errorMessage,
+    });
+  },
+  setSerialNumbersDialog({ commit }, payload) {
+    commit("setSerialNumbersDialog", payload);
+  },
+  setSerialNumbers({ commit }, payload) {
+    commit("setSerialNumbers", payload);
+  },
+  validateAllSerialNumbers({commit, state, dispatch}, payload){
+    for(var i=0; i<state.salesFormFields.serialNumbers.length; i++){
+      dispatch("validateSerialNumbers", {index: i, value: payload[i]} )
+    }
+
+    
+    return payload, state, commit;
+  },
+  setSerialNumberFields({commit}){
+    commit("setSerialNumberFields")
+  },
+  setShowContent({commit}, payload){
+
+    commit("setShowContent", payload)
+  },
+  setfirstSerialNumbers({commit}, payload){
+    commit("setfirstSerialNumbers", payload)
+  },
+  concludeSerialNumbers({commit, state}, payload){
+    var canCloseForm = CanCloseSerialNumbersForm(state.salesErrorMessages.serialNumbers);
+    if(canCloseForm){
+      commit("setSerialNumbersDialog", false)
+    }
+    return commit, payload
   }
 };
-
