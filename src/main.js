@@ -6,7 +6,8 @@ import Axios from "./plugins/axios";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
 import store from "./store";
-
+import VueMask from 'v-mask'
+Vue.use(VueMask);
 Vue.prototype.$http = Axios;
 
 new Vue({

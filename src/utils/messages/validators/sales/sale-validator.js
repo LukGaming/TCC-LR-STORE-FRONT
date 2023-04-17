@@ -1,5 +1,4 @@
 export function salesValidator(
-  serialNumber,
   quantity,
   unityValue,
   selectedProduct,
@@ -8,7 +7,6 @@ export function salesValidator(
   saleDate
 ) {
   return [
-    validateSerialNumber(serialNumber),
     validateQuantity(quantity),
     validateUnityValue(unityValue),
     validateSelectedProduct(selectedProduct),
@@ -18,11 +16,6 @@ export function salesValidator(
   ];
 }
 
-function validateSerialNumber(serialNumber) {
-  return serialNumber == null || serialNumber == ""
-    ? "O Número de Série não pode ficar vazio."
-    : "";
-}
 function validateQuantity(quantity) {
   return quantity == null || quantity == ""
     ? "A Quantidade não pode ficar vazia."
@@ -58,7 +51,6 @@ export function validateSaleDate(saleDate) {
 }
 
 export function canSendSaleForm(
-  serialNumber,
   quantity,
   unityValue,
   selectedProduct,
@@ -67,7 +59,6 @@ export function canSendSaleForm(
   saleDate
 ) {
   var fields = salesValidator(
-    serialNumber,
     quantity,
     unityValue,
     selectedProduct,

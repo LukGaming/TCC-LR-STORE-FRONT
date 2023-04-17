@@ -37,11 +37,10 @@
         text_button="Preencher Números de Série"
         @callback="setSerialNumbersDialog(true)"
       />
-
-      <!-- <ErrorAlertComponent
-        v-if="salesErrorMessages.quantity != ''"
-        :errorMessage="salesErrorMessages.quantity"
-      /> -->
+      <ErrorAlertComponent
+        v-if="salesErrorMessages.serialNumber != ''"
+        :errorMessage="salesErrorMessages.serialNumber"
+      />
       <div class="mt-5"></div>
 
       <v-text-field
@@ -123,8 +122,6 @@
         v-if="salesErrorMessages.saleDate != ''"
         :errorMessage="salesErrorMessages.saleDate"
       />
-
-      {{ salesFormFields }}
 
       <div class="d-flex justify-center">
         <DefaultButton text_button="Criar Venda" @callback="createSale">

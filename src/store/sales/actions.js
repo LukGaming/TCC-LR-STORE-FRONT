@@ -4,7 +4,11 @@ import {
   canSendSaleForm,
   salesValidator,
 } from "@/utils/messages/validators/sales/sale-validator";
-import { CanCloseSerialNumbersForm } from "@/utils/messages/validators/sales/sales-serial-number-validator";
+import {
+  CanCloseSerialNumbersForm,
+  VerifyIfCanSendSerialNumbersForm,
+  createSerialNumbersToSend,
+} from "@/utils/messages/validators/sales/sales-serial-number-validator";
 
 export const actions = {
   addSerialNumber({ commit }, payload) {
@@ -25,7 +29,6 @@ export const actions = {
   async createSale({ dispatch, state, commit, rootState }) {
     dispatch("validateFields", "validateAll");
     var canSendForm = canSendSaleForm(
-      state.salesFormFields.serialNumber,
       state.salesFormFields.quantity,
       state.salesFormFields.unityValue,
       state.salesFormFields.selectedProduct,
@@ -33,12 +36,17 @@ export const actions = {
       state.salesFormFields.selectedClient,
       state.salesFormFields.saleDate
     );
-
-    if (canSendForm) {
+    var canSendSerialNumbers = VerifyIfCanSendSerialNumbersForm(
+      state.salesFormFields.serialNumbers
+    );
+    if (canSendForm && canSendSerialNumbers) {
       try {
         var userId = rootState.userStore.user.id;
+        let serialNumbers = createSerialNumbersToSend(
+          state.salesFormFields.serialNumbers
+        );
         var sale = await createSale(
-          state.salesFormFields.serialNumber,
+          serialNumbers,
           state.salesFormFields.quantity,
           state.salesFormFields.unityValue,
           state.salesFormFields.selectedProduct,
@@ -70,44 +78,42 @@ export const actions = {
           root: true,
         });
       }
+    } else {
+      console.log("nao pode enviar form");
     }
   },
   setSaleFormField({ commit }, payload) {
     commit("setSaleFormField", payload);
   },
-  validateFields({ commit, state }, payload) {
+  validateFields({ commit, state, dispatch }, payload) {
     let order = 0;
     switch (payload) {
-      case "validateSerialNumber":
+      case "validateQuantity":
         order = 1;
         break;
-      case "validateQuantity":
+      case "validateUnityValue":
         order = 2;
         break;
-      case "validateUnityValue":
+      case "validateSelectedProduct":
         order = 3;
         break;
-      case "validateSelectedProduct":
+      case "validateSelectedPaymentMethod":
         order = 4;
         break;
-      case "validateSelectedPaymentMethod":
+      case "validateSelectedClient":
         order = 5;
         break;
-      case "validateSelectedClient":
+      case "validateSaleDate":
         order = 6;
         break;
-      case "validateSaleDate":
-        order = 7;
-        break;
       case "validateAll":
-        order = 8;
+        order = 7;
         break;
 
       default:
         break;
     }
     const [
-      serialNumberError,
       quantityError,
       unityValueError,
       selectedProductError,
@@ -115,7 +121,6 @@ export const actions = {
       selectedClientError,
       saleDateError,
     ] = salesValidator(
-      state.salesFormFields.serialNumber,
       state.salesFormFields.quantity,
       state.salesFormFields.unityValue,
       state.salesFormFields.selectedProduct,
@@ -126,47 +131,63 @@ export const actions = {
 
     if (order >= 1) {
       commit("setSalesErrorMessages", {
-        part: "serialNumber",
-        value: serialNumberError,
-      });
-    }
-    if (order >= 2) {
-      commit("setSalesErrorMessages", {
         part: "quantity",
         value: quantityError,
       });
     }
-    if (order >= 3) {
+    if (order >= 2) {
       commit("setSalesErrorMessages", {
         part: "unityValue",
         value: unityValueError,
       });
     }
-    if (order >= 4) {
+    if (order >= 3) {
       commit("setSalesErrorMessages", {
         part: "selectedProduct",
         value: selectedProductError,
       });
     }
-    if (order >= 5) {
+    if (order >= 4) {
       commit("setSalesErrorMessages", {
         part: "selectedPaymentMethod",
         value: selectedPaymentMethodError,
       });
     }
-    if (order >= 6) {
+    if (order >= 5) {
       commit("setSalesErrorMessages", {
         part: "selectedClient",
         value: selectedClientError,
       });
     }
-    if (order >= 7) {
+    if (order >= 6) {
       commit("setSalesErrorMessages", {
         part: "saleDate",
         value: saleDateError,
       });
     }
-    return commit, payload;
+    if (order >= 7) {
+      for (var i = 0; i < state.salesFormFields.serialNumbers.length; i++) {
+        dispatch("validateSerialNumbers", {
+          index: i,
+          value: state.salesFormFields.serialNumbers[i],
+        });
+      }
+      var canCloseForm = CanCloseSerialNumbersForm(
+        state.salesErrorMessages.serialNumbers
+      );
+      if (canCloseForm) {
+        commit("setSalesErrorMessages", {
+          part: "serialNumber",
+          value: "",
+        });
+      } else {
+        commit("setSalesErrorMessages", {
+          part: "serialNumber",
+          value: "Por favor preencha os Números de Série",
+        });
+      }
+    }
+    return commit, payload, dispatch;
   },
   validateSerialNumbers({ commit }, payload) {
     let errorMessage = "";
@@ -185,29 +206,30 @@ export const actions = {
   setSerialNumbers({ commit }, payload) {
     commit("setSerialNumbers", payload);
   },
-  validateAllSerialNumbers({commit, state, dispatch}, payload){
-    for(var i=0; i<state.salesFormFields.serialNumbers.length; i++){
-      dispatch("validateSerialNumbers", {index: i, value: payload[i]} )
+  validateAllSerialNumbers({ commit, state, dispatch }, payload) {
+    console.log("payload[i]", payload[i]);
+    for (var i = 0; i < state.salesFormFields.serialNumbers.length; i++) {
+      dispatch("validateSerialNumbers", { index: i, value: payload[i] });
     }
 
-    
     return payload, state, commit;
   },
-  setSerialNumberFields({commit}){
-    commit("setSerialNumberFields")
+  setSerialNumberFields({ commit }) {
+    commit("setSerialNumberFields");
   },
-  setShowContent({commit}, payload){
-
-    commit("setShowContent", payload)
+  setShowContent({ commit }, payload) {
+    commit("setShowContent", payload);
   },
-  setfirstSerialNumbers({commit}, payload){
-    commit("setfirstSerialNumbers", payload)
+  setfirstSerialNumbers({ commit }, payload) {
+    commit("setfirstSerialNumbers", payload);
   },
-  concludeSerialNumbers({commit, state}, payload){
-    var canCloseForm = CanCloseSerialNumbersForm(state.salesErrorMessages.serialNumbers);
-    if(canCloseForm){
-      commit("setSerialNumbersDialog", false)
+  concludeSerialNumbers({ commit, state }, payload) {
+    var canCloseForm = CanCloseSerialNumbersForm(
+      state.salesErrorMessages.serialNumbers
+    );
+    if (canCloseForm) {
+      commit("setSerialNumbersDialog", false);
     }
-    return commit, payload
-  }
+    return commit, payload;
+  },
 };

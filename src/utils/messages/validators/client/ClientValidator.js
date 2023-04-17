@@ -19,7 +19,18 @@ function validateClientPhoneNumber(phoneNumber) {
 }
 
 function validateClientCpf(cpf) {
-  return cpf == null || cpf == "" ? "O campo de Cpf não pode ficar vazio" : "";
+  // console.log(cpf.lenght.Kkle)
+  cpf = cpf.replaceAll("-", "")
+  cpf = cpf.replaceAll(".", "")
+  console.log(cpf)
+  return cpf == null || cpf == ""
+    ? "O campo de Cpf não pode ficar vazio"
+    : cpf.length != 11
+    ? "O cpf deve conter 11 Dígitos"
+    : "";
+
+  //removo '/'
+  //.
 }
 
 export function verifyIfCanSendClientForm(name, phoneNumber, cpf) {

@@ -23,6 +23,7 @@ export const state = {
     saleDate: "",
   },
   salesErrorMessages: {
+    serialNumber: "",
     serialNumbers: [""],
     quantity: "",
     unityValue: "",
@@ -31,6 +32,6 @@ export const state = {
     selectedClient: "",
     saleDate: "",
   },
-  serialNumbersDialog: true,
+  serialNumbersDialog: false,
   showContent: true,
 };

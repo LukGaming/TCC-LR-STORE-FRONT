@@ -23,8 +23,6 @@
             />
             <div class="mt-5"></div>
           </div>
-          {{ salesFormFields.serialNumbers }}
-          {{ salesErrorMessages.serialNumbers }}
           <div class="d-flex justify-center">
             <DefaultButton
               text_button="Concluido"
@@ -121,6 +119,7 @@ export default {
     },
   },
   mounted() {
+    console.log("mounted")
     this.fields = new Array(this.salesFormFields.quantity).fill("");
     this.setfirstSerialNumbers(this.fields);
   },
