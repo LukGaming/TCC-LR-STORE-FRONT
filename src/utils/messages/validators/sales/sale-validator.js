@@ -4,14 +4,17 @@ export function salesValidator(
   selectedProduct,
   selectedPaymentMethod,
   selectedClient,
+  selectedSalesType,
   saleDate
 ) {
+  console.log("salesType: ", selectedSalesType)
   return [
     validateQuantity(quantity),
     validateUnityValue(unityValue),
     validateSelectedProduct(selectedProduct),
     validateSelectedPaymentMethod(selectedPaymentMethod),
     validateSelectedClient(selectedClient),
+    validateSalesType(selectedSalesType),
     validateSaleDate(saleDate),
   ];
 }
@@ -50,12 +53,20 @@ export function validateSaleDate(saleDate) {
   return saleDate == null || saleDate == "" ? "Selecione uma Data." : "";
 }
 
+export function validateSalesType(saleType) {
+  console.log(saleType, "saleType")
+  return saleType == null || saleType == ""
+    ? "Selecione um tipo de Venda."
+    : "";
+}
+
 export function canSendSaleForm(
   quantity,
   unityValue,
   selectedProduct,
   selectedPaymentMethod,
   selectedClient,
+  selectedSalesType,
   saleDate
 ) {
   var fields = salesValidator(
@@ -64,8 +75,10 @@ export function canSendSaleForm(
     selectedProduct,
     selectedPaymentMethod,
     selectedClient,
+    selectedSalesType,
     saleDate
   );
+  console.log(fields)
   for (var i = 0; i < fields.length; i++) {
     if (fields[i] != "") {
       return false;

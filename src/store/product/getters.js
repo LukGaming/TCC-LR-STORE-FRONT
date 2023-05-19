@@ -19,12 +19,6 @@ export const getters = {
     return state.productDialog;
   },
   
-  // manufacturerName(state) {
-  //   return state.manufacturerName;
-  // },
-  // getManufacturerMessages(state) {
-  //   return state.manufacturerMessages;
-  // },
   canSendProductForm(state) {
     let canSend = true;
     for (const key in state.productErrorMessages) {

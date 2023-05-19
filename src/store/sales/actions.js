@@ -22,6 +22,7 @@ export const actions = {
   async getSales({ commit }, payload) {
     var response = await $http.get("getAllSales");
     if (response.status == 200) {
+      console.log(response.data.vendas);
       commit("setSales", response.data.vendas);
     }
     return payload;
@@ -31,11 +32,15 @@ export const actions = {
     var canSendForm = canSendSaleForm(
       state.salesFormFields.quantity,
       state.salesFormFields.unityValue,
-      state.salesFormFields.selectedProduct,
+      state.salesFormFields.selectedProduct.id,
       state.salesFormFields.selectedPaymentMethod,
-      state.salesFormFields.selectedClient,
+      state.salesFormFields.selectedClient.id,
+      state.salesFormFields.validateSalesType,
       state.salesFormFields.saleDate
     );
+
+    console.log("canSendForm", canSendForm);
+
     var canSendSerialNumbers = VerifyIfCanSendSerialNumbersForm(
       state.salesFormFields.serialNumbers
     );
@@ -49,9 +54,10 @@ export const actions = {
           serialNumbers,
           state.salesFormFields.quantity,
           state.salesFormFields.unityValue,
-          state.salesFormFields.selectedProduct,
+          state.salesFormFields.selectedProduct.id,
           state.salesFormFields.selectedPaymentMethod,
-          state.salesFormFields.selectedClient,
+          state.salesFormFields.selectedClient.id,
+          state.salesFormFields.selectedSalesType,
           state.salesFormFields.saleDate,
           userId
         );
@@ -66,6 +72,7 @@ export const actions = {
         commit("utilitiesStore/setSnackBarCompletly", snackBarAlert, {
           root: true,
         });
+        commit("clearSalesForm");
       } catch (e) {
         let snackBarAlert = {
           showSnackBar: true,
@@ -97,28 +104,33 @@ export const actions = {
       case "validateSelectedProduct":
         order = 3;
         break;
-      case "validateSelectedPaymentMethod":
+      case "validateSelectedSalesType":
         order = 4;
         break;
-      case "validateSelectedClient":
+      case "validateSelectedPaymentMethod":
         order = 5;
         break;
-      case "validateSaleDate":
+      case "validateSelectedClient":
         order = 6;
         break;
-      case "validateAll":
+      case "validateSaleDate":
         order = 7;
+        break;
+      case "validateAll":
+        order = 8;
         break;
 
       default:
         break;
     }
+    console.log("inside action:",  state.salesFormFields.selectedSalesType)
     const [
       quantityError,
       unityValueError,
       selectedProductError,
       selectedPaymentMethodError,
       selectedClientError,
+      selectedSalesTypeError,
       saleDateError,
     ] = salesValidator(
       state.salesFormFields.quantity,
@@ -126,6 +138,7 @@ export const actions = {
       state.salesFormFields.selectedProduct,
       state.salesFormFields.selectedPaymentMethod,
       state.salesFormFields.selectedClient,
+      state.salesFormFields.selectedSalesType,
       state.salesFormFields.saleDate
     );
 
@@ -147,25 +160,38 @@ export const actions = {
         value: selectedProductError,
       });
     }
+    if (order >= 3) {
+      commit("setSalesErrorMessages", {
+        part: "selectedProduct",
+        value: selectedProductError,
+      });
+    }
     if (order >= 4) {
+      commit("setSalesErrorMessages", {
+        part: "selectedSalesType",
+        value: selectedSalesTypeError,
+      });
+    }
+
+    if (order >= 5) {
       commit("setSalesErrorMessages", {
         part: "selectedPaymentMethod",
         value: selectedPaymentMethodError,
       });
     }
-    if (order >= 5) {
+    if (order >= 6) {
       commit("setSalesErrorMessages", {
         part: "selectedClient",
         value: selectedClientError,
       });
     }
-    if (order >= 6) {
+    if (order >= 7) {
       commit("setSalesErrorMessages", {
         part: "saleDate",
         value: saleDateError,
       });
     }
-    if (order >= 7) {
+    if (order >= 8) {
       for (var i = 0; i < state.salesFormFields.serialNumbers.length; i++) {
         dispatch("validateSerialNumbers", {
           index: i,
@@ -231,5 +257,24 @@ export const actions = {
       commit("setSerialNumbersDialog", false);
     }
     return commit, payload;
+  },
+  setSelectedManufacturer({ dispatch, rootState }, payload) {
+    console.log(rootState.productStore.products);
+    return dispatch, rootState, payload;
+  },
+  async getProductsByManufacturers({ commit }, payload) {
+    console.log("payload", payload);
+    var response = await $http.get("product");
+    if (payload == null) {
+      commit("setProductsByManufacturers", response.data);
+    } else {
+      var products = response.data;
+      console.log(products);
+      var filteredProductsByManufacturer = products.filter(
+        (product) => product.manufacture_id == payload
+      );
+      commit("setProductsByManufacturers", filteredProductsByManufacturer);
+    }
+    commit("setSelectedManufacturerFromFilter", payload);
   },
 };

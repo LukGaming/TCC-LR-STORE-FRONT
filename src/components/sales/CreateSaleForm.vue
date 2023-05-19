@@ -57,11 +57,24 @@
         :errorMessage="salesErrorMessages.unityValue"
       />
       <div class="mt-5"></div>
-
-      <v-select
+      <v-combobox
+        v-model="switchSelectedManufacturer"
+        label="Filtrar por Fabricante"
+        :items="manufacturers"
+        item-text="manufacture_name"
+        item-value="id"
+        outlined
+        hide-details
+        clearable
+        :menu-props="{ bottom: true, offsetY: true }"
+        @click:clear="getProductsByManufacturers(null)"
+      >
+      </v-combobox>
+      <div class="mt-5"></div>
+      <v-combobox
         v-model="switchSelectedProduct"
         label="Selecione um Produto"
-        :items="products"
+        :items="productsByManufacturers"
         item-text="name"
         item-value="id"
         outlined
@@ -69,13 +82,31 @@
         @blur="validateFields('validateSelectedProduct')"
         :menu-props="{ bottom: true, offsetY: true }"
       >
-      </v-select>
+      </v-combobox>
 
       <ErrorAlertComponent
         v-if="salesErrorMessages.selectedProduct != ''"
         :errorMessage="salesErrorMessages.selectedProduct"
       />
       <div class="mt-5"></div>
+      <v-select
+        v-model="switchSelectedSalesType"
+        label="Selecione o Tipo de venda"
+        :items="salesTypes"
+        outlined
+        hide-details
+        @blur="validateFields('validateSelectedSalesType')"
+        :menu-props="{ bottom: true, offsetY: true }"
+      >
+      </v-select>
+
+      <ErrorAlertComponent
+        v-if="salesErrorMessages.selectedSalesType != ''"
+        :errorMessage="salesErrorMessages.selectedSalesType"
+      />
+
+      <div class="mt-5"></div>
+
       <v-select
         v-model="switchSelectedPaymentMethod"
         label="Selecione o Método de Pagamento"
@@ -96,7 +127,7 @@
 
       <div class="mt-5"></div>
 
-      <v-select
+      <v-combobox
         v-model="switchSelectedClient"
         label="Selecione o Cliente"
         :items="clients"
@@ -106,8 +137,9 @@
         hide-details
         @blur="validateFields('validateSelectedClient')"
         :menu-props="{ bottom: true, offsetY: true }"
+        autocomplete
       >
-      </v-select>
+      </v-combobox>
 
       <ErrorAlertComponent
         v-if="salesErrorMessages.selectedClient != ''"
@@ -123,6 +155,8 @@
         :errorMessage="salesErrorMessages.saleDate"
       />
 
+
+      {{ salesFormFields }}
       <div class="d-flex justify-center">
         <DefaultButton text_button="Criar Venda" @callback="createSale">
         </DefaultButton>
@@ -146,13 +180,14 @@ export default {
     SerialNumberForm: () => import("@/components/sales/SerialNumberForm.vue"),
   },
   computed: {
-    ...mapGetters({
-      paymentMethods: "paymentMethodStore/paymentMethods",
-      products: "productStore/products",
-      salesFormFields: "salesStore/salesFormFields",
-      salesErrorMessages: "salesStore/salesErrorMessages",
-      clients: "clientStore/clients",
-    }),
+    switchSelectedSalesType: {
+      get(){
+        return this.salesFormFields.selectedSalesType
+      },
+      set(value){
+        this.setSaleFormField({ part: "selectedSalesType", value: value });
+      }
+    },
     switchSelectedProduct: {
       get() {
         return this.salesFormFields.selectedProduct;
@@ -201,12 +236,32 @@ export default {
         this.setSaleFormField({ part: "selectedClient", value: value });
       },
     },
+    switchSelectedManufacturer: {
+      get() {
+        return this.selectedManufacturer;
+      },
+      set(value) {
+        this.getProductsByManufacturers(value.id);
+      },
+    },
+    ...mapGetters({
+      paymentMethods: "paymentMethodStore/paymentMethods",
+      products: "productStore/products",
+      salesFormFields: "salesStore/salesFormFields",
+      salesErrorMessages: "salesStore/salesErrorMessages",
+      clients: "clientStore/clients",
+      manufacturers: "manufacturerStore/manufacturers",
+      productsByManufacturers: "salesStore/productsByManufacturers",
+      selectedManufacturerFromFilter: "salesStore/selectedManufacturerFromFilter",
+      salesTypes: "salesStore/salesTypes",
+    }),
   },
 
   methods: {
     ...mapActions({
       getPaymentMethods: "paymentMethodStore/getPaymentMethods",
       getProducts: "productStore/getProducts",
+      getManufacturers: "manufacturerStore/getManufacturers",
       validateFields: "salesStore/validateFields",
       setSaleFormField: "salesStore/setSaleFormField",
       createSale: "salesStore/createSale",
@@ -214,12 +269,16 @@ export default {
       addSerialNumber: "salesStore/addSerialNumber",
       removeSerialNumber: "salesStore/removeSerialNumber",
       setSerialNumbersDialog: "salesStore/setSerialNumbersDialog",
+      setSelectedManufacturer: "salesStore/setSelectedManufacturer",
+      getProductsByManufacturers: "salesStore/getProductsByManufacturers",
     }),
   },
   created() {
-    this.getPaymentMethods();
     this.getProducts();
+    this.getPaymentMethods();
     this.getClients();
+    this.getManufacturers();
+    this.getProductsByManufacturers(null);
   },
 };
 </script>

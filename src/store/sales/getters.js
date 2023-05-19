@@ -11,13 +11,22 @@ export const getters = {
   salesErrorMessages(state) {
     return state.salesErrorMessages;
   },
-  serialNumbersDialog(state){
+  serialNumbersDialog(state) {
     return state.serialNumbersDialog;
   },
-  serialNumbers(state){
-    return state.salesFormFields.serialNumbers
+  serialNumbers(state) {
+    return state.salesFormFields.serialNumbers;
   },
-  showContent(state){
-    return state.showContent
+  showContent(state) {
+    return state.showContent;
+  },
+  productsByManufacturers(state){
+    return state.productsByManufacturers;
+  },
+  selectedManufacturerFromFilter(state){
+    return state.selectedManufacturerFromFilter;
+  },
+  salesTypes(state){
+    return state.salesTypes
   }
-};
+}

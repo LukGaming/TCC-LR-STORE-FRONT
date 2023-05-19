@@ -8,6 +8,7 @@ export async function createSale(
   selectedPaymentMethod,
   selectedClient,
   saleDate,
+  selectedSaleType,
   user_id
 ) {
   //TODO: send saleDate
@@ -19,9 +20,10 @@ export async function createSale(
   formData.append("product_id", selectedProduct);
   formData.append("payment_method_id", selectedPaymentMethod);
   formData.append("client_id", selectedClient);
+  formData.append("sale_type", selectedSaleType);
+  formData.append("sale_date", saleDate);
   formData.append("user_id", user_id);
   var response = await $http.post("sales", formData);
-
   if (response.status == 201) {
     return response.data;
   }

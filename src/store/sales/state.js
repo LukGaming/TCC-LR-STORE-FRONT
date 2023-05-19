@@ -13,6 +13,9 @@ export const state = {
     { text: "Usuário", value: "user.user_name" },
     { text: "Ações", value: "actions" },
   ],
+  productsByManufacturers: [],
+  salesTypes: ["Atacado", "Varejo"],
+  selectedManufacturerFromFilter: "",
   salesFormFields: {
     serialNumbers: [],
     quantity: 1,
@@ -21,6 +24,7 @@ export const state = {
     selectedPaymentMethod: "",
     selectedClient: "",
     saleDate: "",
+    selectedSalesType: null,
   },
   salesErrorMessages: {
     serialNumber: "",
@@ -31,6 +35,7 @@ export const state = {
     selectedPaymentMethod: "",
     selectedClient: "",
     saleDate: "",
+    selectedSalesType: ""
   },
   serialNumbersDialog: false,
   showContent: true,

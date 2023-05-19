@@ -28,22 +28,51 @@ export const mutations = {
   setSerialNumbersDialog(state, payload) {
     state.serialNumbersDialog = payload;
   },
-  setSerialNumberErrorMessages(state, payload){
-    console.log(payload.index)
-    state.salesErrorMessages.serialNumbers[payload.index] = payload.value
-    console.log(state.salesErrorMessages.serialNumbers[payload.index])
+  setSerialNumberErrorMessages(state, payload) {
+    console.log(payload.index);
+    state.salesErrorMessages.serialNumbers[payload.index] = payload.value;
+    console.log(state.salesErrorMessages.serialNumbers[payload.index]);
   },
-  setSerialNumbers(state, payload){
-    state.salesFormFields.serialNumbers[payload.index] = payload.value
+  setSerialNumbers(state, payload) {
+    state.salesFormFields.serialNumbers[payload.index] = payload.value;
   },
-  setSerialNumberFields(state){
-    state.salesFormFields.serialNumbers = new Array(state.salesFormFields.quantity).fill("");
+  setSerialNumberFields(state) {
+    state.salesFormFields.serialNumbers = new Array(
+      state.salesFormFields.quantity
+    ).fill("");
   },
-  setShowContent(state, payload){
-    state.showContent = payload
+  setShowContent(state, payload) {
+    state.showContent = payload;
   },
-  setfirstSerialNumbers(state, payload){
+  setfirstSerialNumbers(state, payload) {
     state.salesFormFields.serialNumbers = payload;
+  },
+  setProductsByManufacturers(state, payload) {
+    state.productsByManufacturers = payload;
+  },
+  clearSalesForm(state){
+    state.salesFormFields=  {
+      serialNumbers: [],
+      quantity: 1,
+      unityValue: 0,
+      selectedProduct: "",
+      selectedPaymentMethod: "",
+      selectedClient: "",
+      saleDate: "",
+    };
+
+    state.salesErrorMessages =  {
+      serialNumber: "",
+      serialNumbers: [""],
+      quantity: "",
+      unityValue: "",
+      selectedProduct: "",
+      selectedPaymentMethod: "",
+      selectedClient: "",
+      saleDate: "",
+    }
+  },
+  setSelectedManufacturerFromFilter(state, payload){
+    state.selectedManufacturerFromFilter = payload;
   }
-  
 };
