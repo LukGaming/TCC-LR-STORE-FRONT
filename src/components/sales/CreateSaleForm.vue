@@ -156,7 +156,8 @@
       />
 
 
-      {{ salesFormFields }}
+      {{ salesFormFields.selectedSalesType }}
+      {{ salesErrorMessages.selectedSalesType }}
       <div class="d-flex justify-center">
         <DefaultButton text_button="Criar Venda" @callback="createSale">
         </DefaultButton>
@@ -182,9 +183,11 @@ export default {
   computed: {
     switchSelectedSalesType: {
       get(){
+        console.log(  "inside get" ,this.salesFormFields.selectedSalesType)
         return this.salesFormFields.selectedSalesType
       },
       set(value){
+        console.log("inside set", value)
         this.setSaleFormField({ part: "selectedSalesType", value: value });
       }
     },

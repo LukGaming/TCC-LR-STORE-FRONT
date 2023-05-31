@@ -7,7 +7,7 @@ export function salesValidator(
   selectedSalesType,
   saleDate
 ) {
-  console.log("salesType: ", selectedSalesType)
+
   return [
     validateQuantity(quantity),
     validateUnityValue(unityValue),
@@ -50,11 +50,12 @@ export function validateSelectedClient(selectedClient) {
     : "";
 }
 export function validateSaleDate(saleDate) {
+  
   return saleDate == null || saleDate == "" ? "Selecione uma Data." : "";
 }
 
 export function validateSalesType(saleType) {
-  console.log(saleType, "saleType")
+  console.log( "inside validator", saleType)
   return saleType == null || saleType == ""
     ? "Selecione um tipo de Venda."
     : "";
@@ -69,6 +70,7 @@ export function canSendSaleForm(
   selectedSalesType,
   saleDate
 ) {
+  console.log("inside canSendSaleForm: ", selectedSalesType)
   var fields = salesValidator(
     quantity,
     unityValue,
@@ -78,7 +80,7 @@ export function canSendSaleForm(
     selectedSalesType,
     saleDate
   );
-  console.log(fields)
+
   for (var i = 0; i < fields.length; i++) {
     if (fields[i] != "") {
       return false;

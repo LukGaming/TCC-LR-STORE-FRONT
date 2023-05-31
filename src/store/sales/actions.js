@@ -28,6 +28,7 @@ export const actions = {
     return payload;
   },
   async createSale({ dispatch, state, commit, rootState }) {
+
     dispatch("validateFields", "validateAll");
     var canSendForm = canSendSaleForm(
       state.salesFormFields.quantity,
@@ -35,11 +36,11 @@ export const actions = {
       state.salesFormFields.selectedProduct.id,
       state.salesFormFields.selectedPaymentMethod,
       state.salesFormFields.selectedClient.id,
-      state.salesFormFields.validateSalesType,
+      state.salesFormFields.selectedSalesType,
       state.salesFormFields.saleDate
     );
 
-    console.log("canSendForm", canSendForm);
+    
 
     var canSendSerialNumbers = VerifyIfCanSendSerialNumbersForm(
       state.salesFormFields.serialNumbers
@@ -123,7 +124,7 @@ export const actions = {
       default:
         break;
     }
-    console.log("inside action:",  state.salesFormFields.selectedSalesType)
+    
     const [
       quantityError,
       unityValueError,
@@ -142,6 +143,10 @@ export const actions = {
       state.salesFormFields.saleDate
     );
 
+    console.log("inside action:",  state.salesFormFields.selectedSalesType)
+    console.log("error message", selectedSalesTypeError)
+
+
     if (order >= 1) {
       commit("setSalesErrorMessages", {
         part: "quantity",
@@ -154,12 +159,7 @@ export const actions = {
         value: unityValueError,
       });
     }
-    if (order >= 3) {
-      commit("setSalesErrorMessages", {
-        part: "selectedProduct",
-        value: selectedProductError,
-      });
-    }
+
     if (order >= 3) {
       commit("setSalesErrorMessages", {
         part: "selectedProduct",
