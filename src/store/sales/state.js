@@ -1,13 +1,7 @@
 export const state = {
   sales: [],
   headers: [
-    {
-      text: "Modelo",
-      align: "start",
-      value: "product.name",
-    },
-    { text: "Fabricante", value: "product.manufecturer.manufacture_name" },
-    { text: "Quantidade", value: "quantity" },
+    { text: "Quantidade", value: "total_value" },
     { text: "Cliente", value: "client.full_name" },
     { text: "Método de pagamento", value: "payment_method.name" },
     { text: "Usuário", value: "user.user_name" },
@@ -35,7 +29,7 @@ export const state = {
     selectedPaymentMethod: "",
     selectedClient: "",
     saleDate: "",
-    selectedSalesType: ""
+    selectedSalesType: "",
   },
   serialNumbersDialog: false,
   showContent: true,

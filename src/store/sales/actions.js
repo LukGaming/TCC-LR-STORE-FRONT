@@ -20,15 +20,15 @@ export const actions = {
     return commit, payload;
   },
   async getSales({ commit }, payload) {
-    var response = await $http.get("getAllSales");
+    var response = await $http.get("sales");
     if (response.status == 200) {
-      console.log(response.data.vendas);
-      commit("setSales", response.data.vendas);
+      console.log(response.data.sales);
+
+      commit("setSales", response.data.sales);
     }
     return payload;
   },
   async createSale({ dispatch, state, commit, rootState }) {
-
     dispatch("validateFields", "validateAll");
     var canSendForm = canSendSaleForm(
       state.salesFormFields.quantity,
@@ -39,8 +39,6 @@ export const actions = {
       state.salesFormFields.selectedSalesType,
       state.salesFormFields.saleDate
     );
-
-    
 
     var canSendSerialNumbers = VerifyIfCanSendSerialNumbersForm(
       state.salesFormFields.serialNumbers
@@ -124,7 +122,7 @@ export const actions = {
       default:
         break;
     }
-    
+
     const [
       quantityError,
       unityValueError,
@@ -143,9 +141,8 @@ export const actions = {
       state.salesFormFields.saleDate
     );
 
-    console.log("inside action:",  state.salesFormFields.selectedSalesType)
-    console.log("error message", selectedSalesTypeError)
-
+    console.log("inside action:", state.salesFormFields.selectedSalesType);
+    console.log("error message", selectedSalesTypeError);
 
     if (order >= 1) {
       commit("setSalesErrorMessages", {

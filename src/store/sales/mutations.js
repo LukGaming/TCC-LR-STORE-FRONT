@@ -3,9 +3,6 @@ export const mutations = {
     state.sales = payload;
   },
   setSaleFormField(state, payload) {
-    console.log("inside mutation");
-    console.log("part", payload.part)
-    console.log("value", payload.value)
     state.salesFormFields[payload.part] = payload.value;
   },
   setSalesErrorMessages(state, payload) {
@@ -51,8 +48,8 @@ export const mutations = {
   setProductsByManufacturers(state, payload) {
     state.productsByManufacturers = payload;
   },
-  clearSalesForm(state){
-    state.salesFormFields=  {
+  clearSalesForm(state) {
+    state.salesFormFields = {
       serialNumbers: [],
       quantity: 1,
       unityValue: 0,
@@ -63,7 +60,7 @@ export const mutations = {
       selectedSalesType: null,
     };
 
-    state.salesErrorMessages =  {
+    state.salesErrorMessages = {
       serialNumber: "",
       serialNumbers: [""],
       quantity: "",
@@ -73,9 +70,9 @@ export const mutations = {
       selectedClient: "",
       saleDate: "",
       selectedSalesType: "",
-    }
+    };
   },
-  setSelectedManufacturerFromFilter(state, payload){
+  setSelectedManufacturerFromFilter(state, payload) {
     state.selectedManufacturerFromFilter = payload;
-  }
+  },
 };
