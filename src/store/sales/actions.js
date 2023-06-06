@@ -11,6 +11,11 @@ import {
 } from "@/utils/messages/validators/sales/sales-serial-number-validator";
 
 export const actions = {
+  addProduct({ commit, state }, payload) {
+    console.log(state.productFormFields);
+
+    return commit, payload;
+  },
   addSerialNumber({ commit }, payload) {
     commit("addSerialNumber");
     return commit, payload;

@@ -5,6 +5,7 @@ export const mutations = {
   setSaleFormField(state, payload) {
     state.salesFormFields[payload.part] = payload.value;
   },
+
   setSalesErrorMessages(state, payload) {
     state.salesErrorMessages[payload.part] = payload.value;
   },
@@ -12,10 +13,10 @@ export const mutations = {
     state.sales.push(payload);
   },
   addSerialNumber(state) {
-    if (state.salesFormFields.quantity < 10) {
-      state.salesFormFields.quantity++;
-      state.salesFormFields.serialNumbers.push("");
-      state.salesErrorMessages.serialNumbers.push("");
+    if (state.productFormFields.quantity < 10) {
+      state.productFormFields.quantity++;
+      state.productFormFields.serialNumbers.push("");
+      state.productFormFields.serialNumbers.push("");
     }
   },
   removeSerialNumber(state) {

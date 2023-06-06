@@ -5,6 +5,9 @@ export const getters = {
   getHeaders(state) {
     return state.headers;
   },
+  productFormFields(state) {
+    return state.productFormFields;
+  },
   salesFormFields(state) {
     return state.salesFormFields;
   },
@@ -20,13 +23,13 @@ export const getters = {
   showContent(state) {
     return state.showContent;
   },
-  productsByManufacturers(state){
+  productsByManufacturers(state) {
     return state.productsByManufacturers;
   },
-  selectedManufacturerFromFilter(state){
+  selectedManufacturerFromFilter(state) {
     return state.selectedManufacturerFromFilter;
   },
-  salesTypes(state){
-    return state.salesTypes
-  }
-}
+  salesTypes(state) {
+    return state.salesTypes;
+  },
+};

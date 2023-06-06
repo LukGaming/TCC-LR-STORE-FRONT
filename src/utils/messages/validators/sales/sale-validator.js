@@ -1,17 +1,12 @@
 export function salesValidator(
-  quantity,
-  unityValue,
-  selectedProduct,
+  products,
   selectedPaymentMethod,
   selectedClient,
   selectedSalesType,
   saleDate
 ) {
-
   return [
-    validateQuantity(quantity),
-    validateUnityValue(unityValue),
-    validateSelectedProduct(selectedProduct),
+    validateProducts(products),
     validateSelectedPaymentMethod(selectedPaymentMethod),
     validateSelectedClient(selectedClient),
     validateSalesType(selectedSalesType),
@@ -19,21 +14,26 @@ export function salesValidator(
   ];
 }
 
-function validateQuantity(quantity) {
-  return quantity == null || quantity == ""
-    ? "A Quantidade não pode ficar vazia."
-    : quantity < 1
-    ? "A Quantidade não pode ser menor que 1."
+function validateProducts(products) {
+  return products == null || products == []
+    ? "A lista de produtos não pode ficar vazia."
     : "";
 }
+// function validateQuantity(quantity) {
+//   return quantity == null || quantity == ""
+//     ? "A Quantidade não pode ficar vazia."
+//     : quantity < 1
+//     ? "A Quantidade não pode ser menor que 1."
+//     : "";
+// }
 
-function validateUnityValue(unityValue) {
-  return unityValue == null || unityValue == ""
-    ? "O Valor da Unidade não pode ficar vazia."
-    : unityValue < 1
-    ? "A quantidade não pode ser menor que 1."
-    : "";
-}
+// function validateUnityValue(unityValue) {
+//   return unityValue == null || unityValue == ""
+//     ? "O Valor da Unidade não pode ficar vazia."
+//     : unityValue < 1
+//     ? "A quantidade não pode ser menor que 1."
+//     : "";
+// }
 export function validateSelectedProduct(selectedProduct) {
   return selectedProduct == null || selectedProduct == ""
     ? "Selecione um Produto."
@@ -50,41 +50,28 @@ export function validateSelectedClient(selectedClient) {
     : "";
 }
 export function validateSaleDate(saleDate) {
-  
   return saleDate == null || saleDate == "" ? "Selecione uma Data." : "";
 }
 
 export function validateSalesType(saleType) {
-  console.log( "inside validator", saleType)
+  console.log("inside validator", saleType);
   return saleType == null || saleType == ""
     ? "Selecione um tipo de Venda."
     : "";
 }
 
 export function canSendSaleForm(
-  quantity,
-  unityValue,
-  selectedProduct,
+  products,
   selectedPaymentMethod,
   selectedClient,
   selectedSalesType,
   saleDate
 ) {
-  console.log("inside canSendSaleForm: ", selectedSalesType)
-  var fields = salesValidator(
-    quantity,
-    unityValue,
-    selectedProduct,
+  return salesValidator(
+    products,
     selectedPaymentMethod,
     selectedClient,
     selectedSalesType,
     saleDate
   );
-
-  for (var i = 0; i < fields.length; i++) {
-    if (fields[i] != "") {
-      return false;
-    }
-  }
-  return true;
 }

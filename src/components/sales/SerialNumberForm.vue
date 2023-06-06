@@ -67,6 +67,7 @@ export default {
       },
     },
     quantity() {
+      console.log(this.salesFormFields.quantity);
       let quantity = [];
       for (var i = 0; i < this.salesFormFields.quantity; i++) {
         quantity.push(i);
@@ -77,7 +78,7 @@ export default {
       return [...this.fields];
     },
     ...mapGetters({
-      salesFormFields: "salesStore/salesFormFields",
+      salesFormFields: "salesStore/productFormFields",
       salesErrorMessages: "salesStore/salesErrorMessages",
       serialNumbersDialog: "salesStore/serialNumbersDialog",
     }),
@@ -91,7 +92,7 @@ export default {
       setSerialNumbersDialog: "salesStore/setSerialNumbersDialog",
       setSerialNumbers: "salesStore/setSerialNumbers",
       setfirstSerialNumbers: "salesStore/setfirstSerialNumbers",
-      concludeSerialNumbers: "salesStore/concludeSerialNumbers"
+      concludeSerialNumbers: "salesStore/concludeSerialNumbers",
     }),
     blurSerialNumbers($event, index) {
       this.validateSerialNumbers({
@@ -119,7 +120,7 @@ export default {
     },
   },
   mounted() {
-    console.log("mounted")
+    console.log("mounted");
     this.fields = new Array(this.salesFormFields.quantity).fill("");
     this.setfirstSerialNumbers(this.fields);
   },

@@ -1,100 +1,107 @@
 <template>
   <div>
-    <v-container>
-      <div class="pt-5 pb-5 pl-5 pr-5" style="border: 1px solid green">
-        <AddProductFormDialog />
-      </div>
-      <div class="mt-5"></div>
-      <v-select
-        v-model="switchSelectedSalesType"
-        label="Selecione o Tipo de venda"
-        :items="salesTypes"
-        outlined
-        hide-details
-        @blur="validateFields('validateSelectedSalesType')"
-        :menu-props="{ bottom: true, offsetY: true }"
-      >
-      </v-select>
+    <div class="mt-5"></div>
+    <SerialNumberForm />
+    <v-row no-gutters>
+      <v-col xl="3" lg="3">
+        <v-text-field
+          readonly
+          v-model="switchQuantity"
+          label="Quantidade"
+          hide-details
+          outlined
+          type="number"
+          min="1"
+          @blur="validateFields('validateQuantity')"
+        >
+        </v-text-field>
+      </v-col>
 
-      <ErrorAlertComponent
-        v-if="salesErrorMessages.selectedSalesType != ''"
-        :errorMessage="salesErrorMessages.selectedSalesType"
-      />
+      <v-col xlg="3" class="ml-2">
+        <v-row no-gutters>
+          <v-btn color="black" small @click="addSerialNumber()">
+            <v-icon color="white">mdi-plus</v-icon>
+          </v-btn>
+        </v-row>
+        <v-row no-gutters class="mt-1">
+          <v-btn color="black" small @click="removeSerialNumber()">
+            <v-icon color="white">mdi-minus</v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
+    <div class="mt-5"></div>
+    <DefaultButton
+      text_button="Preencher Números de Série"
+      @callback="setSerialNumbersDialog(true)"
+    />
+    <ErrorAlertComponent
+      v-if="salesErrorMessages.serialNumber != ''"
+      :errorMessage="salesErrorMessages.serialNumber"
+    />
+    <div class="mt-5"></div>
 
-      <div class="mt-5"></div>
+    <v-text-field
+      v-model="switchUnityValue"
+      label="Valor da unidade"
+      hide-details
+      outlined
+      type="number"
+      @blur="validateFields('validateUnityValue')"
+    >
+    </v-text-field>
+    <ErrorAlertComponent
+      v-if="salesErrorMessages.unityValue != ''"
+      :errorMessage="salesErrorMessages.unityValue"
+    />
+    <div class="mt-5"></div>
+    <v-combobox
+      v-model="switchSelectedManufacturer"
+      label="Filtrar por Fabricante"
+      :items="manufacturers"
+      item-text="manufacture_name"
+      item-value="id"
+      outlined
+      hide-details
+      clearable
+      :menu-props="{ bottom: true, offsetY: true }"
+      @click:clear="getProductsByManufacturers(null)"
+    >
+    </v-combobox>
+    <div class="mt-5"></div>
+    <v-combobox
+      v-model="switchSelectedProduct"
+      label="Selecione um Produto"
+      :items="productsByManufacturers"
+      item-text="name"
+      item-value="id"
+      outlined
+      hide-details
+      @blur="validateFields('validateSelectedProduct')"
+      :menu-props="{ bottom: true, offsetY: true }"
+    >
+    </v-combobox>
 
-      <v-select
-        v-model="switchSelectedPaymentMethod"
-        label="Selecione o Método de Pagamento"
-        :items="paymentMethods"
-        item-text="name"
-        item-value="id"
-        outlined
-        hide-details
-        @blur="validateFields('validateSelectedPaymentMethod')"
-        :menu-props="{ bottom: true, offsetY: true }"
-      >
-      </v-select>
-
-      <ErrorAlertComponent
-        v-if="salesErrorMessages.selectedPaymentMethod != ''"
-        :errorMessage="salesErrorMessages.selectedPaymentMethod"
-      />
-
-      <div class="mt-5"></div>
-
-      <v-combobox
-        v-model="switchSelectedClient"
-        label="Selecione o Cliente"
-        :items="clients"
-        item-text="full_name"
-        item-value="id"
-        outlined
-        hide-details
-        @blur="validateFields('validateSelectedClient')"
-        :menu-props="{ bottom: true, offsetY: true }"
-        autocomplete
-      >
-      </v-combobox>
-
-      <ErrorAlertComponent
-        v-if="salesErrorMessages.selectedClient != ''"
-        :errorMessage="salesErrorMessages.selectedClient"
-      />
-
-      <div class="mt-5"></div>
-
-      <DatePickerComponent />
-
-      <ErrorAlertComponent
-        v-if="salesErrorMessages.saleDate != ''"
-        :errorMessage="salesErrorMessages.saleDate"
-      />
-
-      {{ salesFormFields.selectedSalesType }}
-      {{ salesErrorMessages.selectedSalesType }}
+    <ErrorAlertComponent
+      v-if="salesErrorMessages.selectedProduct != ''"
+      :errorMessage="salesErrorMessages.selectedProduct"
+    />
+    <div class="mt-5">
       <div class="d-flex justify-center">
-        <DefaultButton text_button="Criar Venda" @callback="createSale">
-        </DefaultButton>
+        <DefaultButton text_button="Adicionar" @callback="addProduct()" />
       </div>
-    </v-container>
+    </div>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  data() {
-    return {};
-  },
   components: {
     DefaultButton: () =>
       import("@/components/utilities/DefaultBlackButton.vue"),
     ErrorAlertComponent: () =>
       import("@/components/utilities/ErrorAlertComponent.vue"),
-    DatePickerComponent: () =>
-      import("@/components/sales/DatePickerComponent.vue"),
-    AddProductFormDialog: () =>
-      import("@/components/sales/AddProductDialog.vue"),
+    SerialNumberForm: () => import("@/components/sales/SerialNumberForm.vue"),
   },
   computed: {
     switchSelectedSalesType: {
@@ -113,14 +120,6 @@ export default {
         this.setSaleFormField({ part: "selectedProduct", value: value });
       },
     },
-    switchSelectedPaymentMethod: {
-      get() {
-        return this.salesFormFields.selectedPaymentMethod;
-      },
-      set(value) {
-        this.setSaleFormField({ part: "selectedPaymentMethod", value: value });
-      },
-    },
     switchSerialNumber: {
       get() {
         return this.salesFormFields.serialNumber;
@@ -131,7 +130,7 @@ export default {
     },
     switchQuantity: {
       get() {
-        return this.salesFormFields.quantity;
+        return this.productFormFields.quantity;
       },
       set(value) {
         this.setSaleFormField({ part: "quantity", value: value });
@@ -139,18 +138,10 @@ export default {
     },
     switchUnityValue: {
       get() {
-        return this.salesFormFields.unityValue;
+        return this.productFormFields.unityValue;
       },
       set(value) {
         this.setSaleFormField({ part: "unityValue", value: value });
-      },
-    },
-    switchSelectedClient: {
-      get() {
-        return this.salesFormFields.selectedClient;
-      },
-      set(value) {
-        this.setSaleFormField({ part: "selectedClient", value: value });
       },
     },
     switchSelectedManufacturer: {
@@ -172,6 +163,7 @@ export default {
       selectedManufacturerFromFilter:
         "salesStore/selectedManufacturerFromFilter",
       salesTypes: "salesStore/salesTypes",
+      productFormFields: "salesStore/productFormFields",
     }),
   },
 
@@ -189,6 +181,7 @@ export default {
       setSerialNumbersDialog: "salesStore/setSerialNumbersDialog",
       setSelectedManufacturer: "salesStore/setSelectedManufacturer",
       getProductsByManufacturers: "salesStore/getProductsByManufacturers",
+      addProduct: "salesStore/addProduct",
     }),
   },
   created() {

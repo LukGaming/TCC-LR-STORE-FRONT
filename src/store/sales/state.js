@@ -11,14 +11,17 @@ export const state = {
   salesTypes: ["Atacado", "Varejo"],
   selectedManufacturerFromFilter: "",
   salesFormFields: {
-    serialNumbers: [],
-    quantity: 1,
-    unityValue: 0,
-    selectedProduct: "",
     selectedPaymentMethod: "",
     selectedClient: "",
     saleDate: "",
     selectedSalesType: null,
+    products: [],
+  },
+  productFormFields: {
+    quantity: 0,
+    serialNumbers: [],
+    unityValue: 0,
+    selectedProduct: null,
   },
   salesErrorMessages: {
     serialNumber: "",
