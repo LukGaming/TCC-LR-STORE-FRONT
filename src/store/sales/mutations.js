@@ -1,11 +1,19 @@
 export const mutations = {
+  setAddProductDialog(state, payload) {
+    state.productDialog = payload;
+  },
+  addProduct(state, payload) {
+    state.salesFormFields.products.push(payload);
+  },
   setSales(state, payload) {
     state.sales = payload;
   },
   setSaleFormField(state, payload) {
     state.salesFormFields[payload.part] = payload.value;
   },
-
+  setProductFormFields(state, payload) {
+    state.productFormFields[payload.part] = payload.value;
+  },
   setSalesErrorMessages(state, payload) {
     state.salesErrorMessages[payload.part] = payload.value;
   },
@@ -16,14 +24,12 @@ export const mutations = {
     if (state.productFormFields.quantity < 10) {
       state.productFormFields.quantity++;
       state.productFormFields.serialNumbers.push("");
-      state.productFormFields.serialNumbers.push("");
     }
   },
   removeSerialNumber(state) {
-    if (state.salesFormFields.quantity > 1) {
-      state.salesFormFields.quantity--;
-      state.salesFormFields.serialNumbers.pop();
-      state.salesErrorMessages.serialNumbers.pop();
+    if (state.productFormFields.quantity > 1) {
+      state.productFormFields.quantity--;
+      state.productFormFields.serialNumbers.pop();
     }
   },
   setSerialNumbersDialog(state, payload) {
@@ -33,7 +39,7 @@ export const mutations = {
     state.salesErrorMessages.serialNumbers[payload.index] = payload.value;
   },
   setSerialNumbers(state, payload) {
-    state.salesFormFields.serialNumbers[payload.index] = payload.value;
+    state.productFormFields.serialNumbers[payload.index] = payload.value;
   },
   setSerialNumberFields(state) {
     state.salesFormFields.serialNumbers = new Array(

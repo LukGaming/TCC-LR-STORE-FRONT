@@ -104,28 +104,20 @@ export default {
     SerialNumberForm: () => import("@/components/sales/SerialNumberForm.vue"),
   },
   computed: {
-    switchSelectedSalesType: {
-      get() {
-        return this.salesFormFields.selectedSalesType;
-      },
-      set(value) {
-        this.setSaleFormField({ part: "selectedSalesType", value: value });
-      },
-    },
     switchSelectedProduct: {
       get() {
-        return this.salesFormFields.selectedProduct;
+        return this.productFormFields.selectedProduct;
       },
       set(value) {
-        this.setSaleFormField({ part: "selectedProduct", value: value });
+        this.setProductFormFields({ part: "selectedProduct", value: value });
       },
     },
     switchSerialNumber: {
       get() {
-        return this.salesFormFields.serialNumber;
+        return this.productFormFields.serialNumber;
       },
       set(value) {
-        this.setSaleFormField({ part: "serialNumber", value: value });
+        this.setProductFormFields({ part: "serialNumber", value: value });
       },
     },
     switchQuantity: {
@@ -133,7 +125,7 @@ export default {
         return this.productFormFields.quantity;
       },
       set(value) {
-        this.setSaleFormField({ part: "quantity", value: value });
+        this.setProductFormFields({ part: "quantity", value: value });
       },
     },
     switchUnityValue: {
@@ -141,7 +133,7 @@ export default {
         return this.productFormFields.unityValue;
       },
       set(value) {
-        this.setSaleFormField({ part: "unityValue", value: value });
+        this.setProductFormFields({ part: "unityValue", value: value });
       },
     },
     switchSelectedManufacturer: {
@@ -182,6 +174,7 @@ export default {
       setSelectedManufacturer: "salesStore/setSelectedManufacturer",
       getProductsByManufacturers: "salesStore/getProductsByManufacturers",
       addProduct: "salesStore/addProduct",
+      setProductFormFields: "salesStore/setProductFormFields",
     }),
   },
   created() {

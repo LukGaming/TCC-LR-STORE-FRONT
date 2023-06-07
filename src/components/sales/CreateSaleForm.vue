@@ -1,9 +1,8 @@
 <template>
   <div>
     <v-container>
-      <div class="pt-5 pb-5 pl-5 pr-5" style="border: 1px solid green">
-        <AddProductFormDialog />
-      </div>
+      <AddProductFormDialog />
+
       <div class="mt-5"></div>
       <v-select
         v-model="switchSelectedSalesType"
@@ -71,8 +70,14 @@
         :errorMessage="salesErrorMessages.saleDate"
       />
 
-      {{ salesFormFields.selectedSalesType }}
-      {{ salesErrorMessages.selectedSalesType }}
+      <div class="d-flex justify-start">
+        <DefaultButton
+          text_button="Adicionar Produto"
+          @callback="setAddProductDialog(true)"
+        >
+        </DefaultButton>
+      </div>
+
       <div class="d-flex justify-center">
         <DefaultButton text_button="Criar Venda" @callback="createSale">
         </DefaultButton>
@@ -177,6 +182,7 @@ export default {
 
   methods: {
     ...mapActions({
+      setAddProductDialog: "salesStore/setAddProductDialog",
       getPaymentMethods: "paymentMethodStore/getPaymentMethods",
       getProducts: "productStore/getProducts",
       getManufacturers: "manufacturerStore/getManufacturers",

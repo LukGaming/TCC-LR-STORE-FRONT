@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="switchDialog" persistent>
+    <v-dialog v-model="addProductDialog" persistent>
       <v-card>
         <div class="d-flex justify-center pt-5">
           <span class="text-h5">Criando Produtos</span>
@@ -10,7 +10,7 @@
           <v-spacer></v-spacer>
           <DefaultButton
             text_button="cancelar"
-            @callback="setProductDialog(false)"
+            @callback="setAddProductDialog(false)"
           />
         </v-card-actions>
       </v-card>
@@ -18,7 +18,7 @@
   </v-row>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -33,8 +33,11 @@ export default {
 
   methods: {
     ...mapActions({
-      setProductDialog: "productStore/setProductDialog",
+      setAddProductDialog: "salesStore/setAddProductDialog",
     }),
+  },
+  computed: {
+    ...mapGetters({ addProductDialog: "salesStore/addProductDialog" }),
   },
 };
 </script>

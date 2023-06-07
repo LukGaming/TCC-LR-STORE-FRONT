@@ -1,4 +1,7 @@
 export const getters = {
+  addProductDialog(state) {
+    return state.productDialog;
+  },
   getSales(state) {
     return state.sales;
   },

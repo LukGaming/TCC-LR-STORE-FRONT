@@ -3,7 +3,7 @@ import { createSale } from "@/services/sales";
 import {
   canSendSaleForm,
   salesValidator,
-} from "@/utils/messages/validators/sales/sale-validator";
+} from "@/utils/messages/validators/sales/sale-validator.js";
 import {
   CanCloseSerialNumbersForm,
   VerifyIfCanSendSerialNumbersForm,
@@ -11,9 +11,11 @@ import {
 } from "@/utils/messages/validators/sales/sales-serial-number-validator";
 
 export const actions = {
+  setAddProductDialog({ commit }, payload) {
+    commit("setAddProductDialog", payload);
+  },
   addProduct({ commit, state }, payload) {
-    console.log(state.productFormFields);
-
+    commit("addProduct", state.productFormFields);
     return commit, payload;
   },
   addSerialNumber({ commit }, payload) {
@@ -24,6 +26,7 @@ export const actions = {
     commit("removeSerialNumber");
     return commit, payload;
   },
+
   async getSales({ commit }, payload) {
     var response = await $http.get("sales");
     if (response.status == 200) {
@@ -96,6 +99,9 @@ export const actions = {
   setSaleFormField({ commit }, payload) {
     commit("setSaleFormField", payload);
   },
+  setProductFormFields({ commit }, payload) {
+    commit("setProductFormFields", payload);
+  },
   validateFields({ commit, state, dispatch }, payload) {
     let order = 0;
     switch (payload) {
@@ -129,92 +135,68 @@ export const actions = {
     }
 
     const [
-      quantityError,
-      unityValueError,
-      selectedProductError,
+      products,
       selectedPaymentMethodError,
       selectedClientError,
       selectedSalesTypeError,
       saleDateError,
     ] = salesValidator(
-      state.salesFormFields.quantity,
-      state.salesFormFields.unityValue,
-      state.salesFormFields.selectedProduct,
+      state.salesFormFields.products,
       state.salesFormFields.selectedPaymentMethod,
       state.salesFormFields.selectedClient,
       state.salesFormFields.selectedSalesType,
       state.salesFormFields.saleDate
     );
 
-    console.log("inside action:", state.salesFormFields.selectedSalesType);
-    console.log("error message", selectedSalesTypeError);
+    console.log(products);
 
     if (order >= 1) {
-      commit("setSalesErrorMessages", {
-        part: "quantity",
-        value: quantityError,
-      });
-    }
-    if (order >= 2) {
-      commit("setSalesErrorMessages", {
-        part: "unityValue",
-        value: unityValueError,
-      });
-    }
-
-    if (order >= 3) {
-      commit("setSalesErrorMessages", {
-        part: "selectedProduct",
-        value: selectedProductError,
-      });
-    }
-    if (order >= 4) {
       commit("setSalesErrorMessages", {
         part: "selectedSalesType",
         value: selectedSalesTypeError,
       });
     }
 
-    if (order >= 5) {
+    if (order >= 2) {
       commit("setSalesErrorMessages", {
         part: "selectedPaymentMethod",
         value: selectedPaymentMethodError,
       });
     }
-    if (order >= 6) {
+    if (order >= 3) {
       commit("setSalesErrorMessages", {
         part: "selectedClient",
         value: selectedClientError,
       });
     }
-    if (order >= 7) {
+    if (order >= 4) {
       commit("setSalesErrorMessages", {
         part: "saleDate",
         value: saleDateError,
       });
     }
-    if (order >= 8) {
-      for (var i = 0; i < state.salesFormFields.serialNumbers.length; i++) {
-        dispatch("validateSerialNumbers", {
-          index: i,
-          value: state.salesFormFields.serialNumbers[i],
-        });
-      }
-      var canCloseForm = CanCloseSerialNumbersForm(
-        state.salesErrorMessages.serialNumbers
-      );
-      if (canCloseForm) {
-        commit("setSalesErrorMessages", {
-          part: "serialNumber",
-          value: "",
-        });
-      } else {
-        commit("setSalesErrorMessages", {
-          part: "serialNumber",
-          value: "Por favor preencha os Números de Série",
-        });
-      }
-    }
+    // if (order >= 5) {
+    //   for (var i = 0; i < state.salesFormFields.serialNumbers.length; i++) {
+    //     dispatch("validateSerialNumbers", {
+    //       index: i,
+    //       value: state.salesFormFields.serialNumbers[i],
+    //     });
+    //   }
+    //   var canCloseForm = CanCloseSerialNumbersForm(
+    //     state.salesErrorMessages.serialNumbers
+    //   );
+    //   if (canCloseForm) {
+    //     commit("setSalesErrorMessages", {
+    //       part: "serialNumber",
+    //       value: "",
+    //     });
+    //   } else {
+    //     commit("setSalesErrorMessages", {
+    //       part: "serialNumber",
+    //       value: "Por favor preencha os Números de Série",
+    //     });
+    //   }
+    // }
     return commit, payload, dispatch;
   },
   validateSerialNumbers({ commit }, payload) {

@@ -7,7 +7,6 @@
         </div>
         <v-container>
           <div class="mt-5"></div>
-
           <div v-for="(item, index) in quantity" :key="index" :index="index">
             <v-text-field
               :label="`Número de série  ${index + 1}`"
@@ -39,6 +38,7 @@
             @callback="setSerialNumbersDialog(false)"
           />
         </v-card-actions>
+        {{ productFormFields.serialNumbers }}
       </v-card>
     </v-dialog>
   </v-row>
@@ -67,9 +67,8 @@ export default {
       },
     },
     quantity() {
-      console.log(this.salesFormFields.quantity);
       let quantity = [];
-      for (var i = 0; i < this.salesFormFields.quantity; i++) {
+      for (var i = 0; i < this.productFormFields.quantity; i++) {
         quantity.push(i);
       }
       return quantity;
@@ -78,7 +77,7 @@ export default {
       return [...this.fields];
     },
     ...mapGetters({
-      salesFormFields: "salesStore/productFormFields",
+      productFormFields: "salesStore/productFormFields",
       salesErrorMessages: "salesStore/salesErrorMessages",
       serialNumbersDialog: "salesStore/serialNumbersDialog",
     }),
@@ -116,12 +115,12 @@ export default {
       this.fields.splice(index, 1, $event);
     },
     getSerialNumberValue(index) {
-      return this.salesFormFields.serialNumbers[index];
+      return this.productFormFields.serialNumbers[index];
     },
   },
   mounted() {
     console.log("mounted");
-    this.fields = new Array(this.salesFormFields.quantity).fill("");
+    this.fields = new Array(this.productFormFields.quantity).fill("");
     this.setfirstSerialNumbers(this.fields);
   },
 };
