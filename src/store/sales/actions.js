@@ -2,12 +2,12 @@ import $http from "@/plugins/axios";
 import { createSale } from "@/services/sales";
 import {
   canSendSaleForm,
+  // canSendSaleForm,
   salesValidator,
 } from "@/utils/messages/validators/sales/sale-validator.js";
 import {
   CanCloseSerialNumbersForm,
-  VerifyIfCanSendSerialNumbersForm,
-  createSerialNumbersToSend,
+  // VerifyIfCanSendSerialNumbersForm,
 } from "@/utils/messages/validators/sales/sales-serial-number-validator";
 
 export const actions = {
@@ -16,6 +16,7 @@ export const actions = {
   },
   addProduct({ commit, state }, payload) {
     commit("addProduct", state.productFormFields);
+    commit("setAddProductDialog", false);
     return commit, payload;
   },
   addSerialNumber({ commit }, payload) {
@@ -38,36 +39,19 @@ export const actions = {
   },
   async createSale({ dispatch, state, commit, rootState }) {
     dispatch("validateFields", "validateAll");
+
     var canSendForm = canSendSaleForm(
-      state.salesFormFields.quantity,
-      state.salesFormFields.unityValue,
-      state.salesFormFields.selectedProduct.id,
+      state.salesFormFields.products,
       state.salesFormFields.selectedPaymentMethod,
-      state.salesFormFields.selectedClient.id,
+      state.salesFormFields.selectedClient,
       state.salesFormFields.selectedSalesType,
       state.salesFormFields.saleDate
     );
-
-    var canSendSerialNumbers = VerifyIfCanSendSerialNumbersForm(
-      state.salesFormFields.serialNumbers
-    );
-    if (canSendForm && canSendSerialNumbers) {
+    console.log("canSendForm", canSendForm);
+    if (canSendForm) {
       try {
         var userId = rootState.userStore.user.id;
-        let serialNumbers = createSerialNumbersToSend(
-          state.salesFormFields.serialNumbers
-        );
-        var sale = await createSale(
-          serialNumbers,
-          state.salesFormFields.quantity,
-          state.salesFormFields.unityValue,
-          state.salesFormFields.selectedProduct.id,
-          state.salesFormFields.selectedPaymentMethod,
-          state.salesFormFields.selectedClient.id,
-          state.salesFormFields.selectedSalesType,
-          state.salesFormFields.saleDate,
-          userId
-        );
+        var sale = await createSale(state.salesFormFields, userId);
         commit("addNewSale", sale);
         let snackBarAlert = {
           showSnackBar: true,
@@ -92,8 +76,6 @@ export const actions = {
           root: true,
         });
       }
-    } else {
-      console.log("nao pode enviar form");
     }
   },
   setSaleFormField({ commit }, payload) {

@@ -16,6 +16,7 @@ import { manufacturerStore } from "./manufacturer";
 import { productStore } from "./product";
 import { clientStore } from "./client";
 import { paymentMethodStore } from "./payment-method";
+import { credit } from "./credit";
 
 export default new Vuex.Store({
   modules: {
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     productStore,
     clientStore,
     paymentMethodStore,
+    credit,
   },
   plugins: [vuexLocal.plugin],
 });

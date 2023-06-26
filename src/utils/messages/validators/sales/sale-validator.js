@@ -19,21 +19,7 @@ function validateProducts(products) {
     ? "A lista de produtos não pode ficar vazia."
     : "";
 }
-// function validateQuantity(quantity) {
-//   return quantity == null || quantity == ""
-//     ? "A Quantidade não pode ficar vazia."
-//     : quantity < 1
-//     ? "A Quantidade não pode ser menor que 1."
-//     : "";
-// }
 
-// function validateUnityValue(unityValue) {
-//   return unityValue == null || unityValue == ""
-//     ? "O Valor da Unidade não pode ficar vazia."
-//     : unityValue < 1
-//     ? "A quantidade não pode ser menor que 1."
-//     : "";
-// }
 export function validateSelectedProduct(selectedProduct) {
   return selectedProduct == null || selectedProduct == ""
     ? "Selecione um Produto."
@@ -67,11 +53,24 @@ export function canSendSaleForm(
   selectedSalesType,
   saleDate
 ) {
-  return salesValidator(
+  const [
+    productError,
+    selectedPaymentMethodError,
+    selectedClientError,
+    selectedSalesTypeError,
+    saleDateError,
+  ] = salesValidator(
     products,
     selectedPaymentMethod,
     selectedClient,
     selectedSalesType,
     saleDate
+  );
+  return (
+    productError == "" &&
+    selectedPaymentMethodError == "" &&
+    selectedClientError == "" &&
+    selectedSalesTypeError == "" &&
+    saleDateError == ""
   );
 }

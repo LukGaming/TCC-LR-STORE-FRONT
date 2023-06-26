@@ -1,5 +1,6 @@
 export const state = {
   productDialog: false,
+  isEditingSale: false,
   sales: [],
   headers: [
     { text: "Quantidade", value: "total_value" },
@@ -19,6 +20,7 @@ export const state = {
     products: [],
   },
   productFormFields: {
+    id: null,
     quantity: 1,
     serialNumbers: [],
     unityValue: 0,

@@ -65,13 +65,11 @@ export const mutations = {
       selectedClient: "",
       saleDate: "",
       selectedSalesType: null,
+      products: [],
     };
 
     state.salesErrorMessages = {
-      serialNumber: "",
-      serialNumbers: [""],
-      quantity: "",
-      unityValue: "",
+      products: "",
       selectedProduct: "",
       selectedPaymentMethod: "",
       selectedClient: "",

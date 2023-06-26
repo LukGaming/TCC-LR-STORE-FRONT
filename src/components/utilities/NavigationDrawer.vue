@@ -43,6 +43,11 @@
           </v-list-item>
           <v-list-item>
             <v-list-item-title>
+              <div @click="goToCredit()">Taxas de crédito</div>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>
               <div>
                 <DefaultBlackButton text_button="Deslogar" @callback="logout" />
               </div>
@@ -96,6 +101,9 @@ export default {
     },
     goToHome() {
       this.$router.push("/home");
+    },
+    goToCredit() {
+      this.$router.push("/credit");
     },
   },
 };

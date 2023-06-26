@@ -1,4 +1,7 @@
 export const getters = {
+  isEditingSale(state) {
+    return state.isEditingSale;
+  },
   addProductDialog(state) {
     return state.productDialog;
   },

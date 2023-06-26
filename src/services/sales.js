@@ -1,29 +1,11 @@
 import $http from "@/plugins/axios";
 
-export async function createSale(
-  serialNumber,
-  quantity,
-  unityValue,
-  selectedProduct,
-  selectedPaymentMethod,
-  selectedClient,
-  saleDate,
-  selectedSaleType,
-  user_id
-) {
+export async function createSale(sale, userId) {
   //TODO: send saleDate
-  console.log(saleDate);
-  var formData = new FormData();
-  formData.append("serial_number", serialNumber);
-  formData.append("quantity", quantity);
-  formData.append("unity_value", unityValue);
-  formData.append("product_id", selectedProduct);
-  formData.append("payment_method_id", selectedPaymentMethod);
-  formData.append("client_id", selectedClient);
-  formData.append("sale_type", selectedSaleType);
-  formData.append("sale_date", saleDate);
-  formData.append("user_id", user_id);
-  var response = await $http.post("sales", formData);
+
+  sale.userId = userId;
+  console.log(sale);
+  var response = await $http.post("sales", sale);
   if (response.status == 201) {
     return response.data;
   }

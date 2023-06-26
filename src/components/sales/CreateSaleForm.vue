@@ -82,6 +82,7 @@
         <DefaultButton text_button="Criar Venda" @callback="createSale">
         </DefaultButton>
       </div>
+      {{ salesFormFields }}
     </v-container>
   </div>
 </template>

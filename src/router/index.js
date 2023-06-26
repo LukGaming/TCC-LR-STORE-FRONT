@@ -8,6 +8,9 @@ import ManufacturerPage from "@/components/manufacturer/ManufacturerPage.vue";
 import ProductPage from "@/components/product/ProductPage.vue";
 import ClientPage from "@/components/client/ClientPage.vue";
 import PaymentMethodPageVue from "@/components/payment-method/PaymentMethodPage.vue";
+
+import CreditPage from "@/components/credit/CreditPage.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -52,6 +55,14 @@ const routes = [
     path: "/clientes",
     name: "clientes",
     component: ClientPage,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/credit",
+    name: "creditos",
+    component: CreditPage,
     meta: {
       requiresAuth: true,
     },
