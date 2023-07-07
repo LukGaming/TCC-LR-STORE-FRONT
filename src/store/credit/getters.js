@@ -5,4 +5,10 @@ export const getters = {
   headers(state) {
     return state.headers;
   },
+  creditDialog(state) {
+    return state.creditDialog;
+  },
+  creditForm(state) {
+    return state.creditForm;
+  },
 };

@@ -13,18 +13,24 @@
           <v-spacer></v-spacer>
           <DefaultButton
             text_button="Adicionar Método de pagamento"
-            @callback="null"
+            @callback="setCreditDialog(true)"
           />
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
     </v-data-table>
+    <CreditFormDialog />
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
+  components: {
+    DefaultButton: () =>
+      import("@/components/utilities/DefaultBlackButton.vue"),
+    CreditFormDialog: () => import("@/components/credit/AddCreditDialog.vue"),
+  },
   computed: {
     ...mapGetters({
       credits: "credit/credits",
@@ -32,7 +38,10 @@ export default {
     }),
   },
   methods: {
-    ...mapActions({ getCredits: "credit/getCreditsFromApi" }),
+    ...mapActions({
+      getCredits: "credit/getCreditsFromApi",
+      setCreditDialog: "credit/setCreditDialog",
+    }),
   },
   mounted() {
     this.getCredits();
