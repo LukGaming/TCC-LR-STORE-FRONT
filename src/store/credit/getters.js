@@ -11,4 +11,13 @@ export const getters = {
   creditForm(state) {
     return state.creditForm;
   },
+  creditErrorMessages(state) {
+    return state.creditErrorMessages;
+  },
+  isEditing(state) {
+    return state.isEditing;
+  },
+  deleteDialog(state) {
+    return state.deleteDialog;
+  },
 };

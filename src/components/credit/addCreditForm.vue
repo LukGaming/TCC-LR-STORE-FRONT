@@ -6,10 +6,15 @@
       type="number"
       hide-details
       outlined
+      @blur="validateCreditFields('quantity')"
     >
     </v-text-field>
 
-    <ErrorAlertComponent v-if="true" :errorMessage="'erro '" />
+    <ErrorAlertComponent
+      v-if="creditErrorMessages.installment_quantity != ''"
+      :errorMessage="creditErrorMessages.installment_quantity"
+    />
+    <div class="mt-5"></div>
 
     <v-text-field
       v-model.number="SwitchInstallMentPercentage"
@@ -18,15 +23,22 @@
       hide-details
       outlined
       value
+      @blur="validateCreditFields('percentage')"
     >
     </v-text-field>
 
-    <ErrorAlertComponent v-if="true" :errorMessage="'erro '" />
+    <ErrorAlertComponent
+      v-if="creditErrorMessages.installment_percentage != ''"
+      :errorMessage="creditErrorMessages.installment_percentage"
+    />
 
     <div class="mt-5"></div>
-    {{ creditForm }}
+
     <div class="d-flex justify-center">
-      <DefaultButton text_button="Criar parcelamento" @callback="createCredit">
+      <DefaultButton
+        :text_button="isEditing ? 'Salvar Parcelamento' : 'Criar parcelamento'"
+        @callback="createCredit"
+      >
       </DefaultButton>
     </div>
   </div>
@@ -41,7 +53,11 @@ export default {
       import("@/components/utilities/ErrorAlertComponent.vue"),
   },
   computed: {
-    ...mapGetters({ creditForm: "credit/creditForm" }),
+    ...mapGetters({
+      creditForm: "credit/creditForm",
+      creditErrorMessages: "credit/creditErrorMessages",
+      isEditing: "credit/isEditing",
+    }),
     switchInstallmentQuantity: {
       get() {
         return this.creditForm.installment_quantity;
@@ -63,6 +79,7 @@ export default {
     ...mapActions({
       setCreditForm: "credit/setCreditForm",
       createCredit: "credit/createCredit",
+      validateCreditFields: "credit/validateCreditFields",
     }),
   },
 };
