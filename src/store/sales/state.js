@@ -3,10 +3,11 @@ export const state = {
   isEditingSale: false,
   sales: [],
   headers: [
-    { text: "Quantidade", value: "total_value" },
+    { text: "Valor total", value: "total_value" },
     { text: "Cliente", value: "client.full_name" },
+    { text: "Tipo de venda", value: "actions" },
     { text: "Método de pagamento", value: "payment_method.name" },
-    { text: "Usuário", value: "user.user_name" },
+    { text: "Vendedor", value: "user.user_name" },
     { text: "Ações", value: "actions" },
   ],
   productsByManufacturers: [],
