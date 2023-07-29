@@ -2,6 +2,20 @@ export const state = {
   productDialog: false,
   isEditingSale: false,
   sales: [],
+  paymentMethods: [
+    {
+      id: 1,
+      name: "A vista",
+    },
+    {
+      id: 2,
+      name: "Crédito",
+    },
+    {
+      id: 3,
+      name: "Débito",
+    },
+  ],
   headers: [
     { text: "Valor total", value: "total_value" },
     { text: "Cliente", value: "client.full_name" },
@@ -14,6 +28,7 @@ export const state = {
   salesTypes: ["Atacado", "Varejo"],
   selectedManufacturerFromFilter: "",
   salesFormFields: {
+    paymentMethod: 1,
     selectedPaymentMethod: "",
     selectedClient: "",
     saleDate: "",

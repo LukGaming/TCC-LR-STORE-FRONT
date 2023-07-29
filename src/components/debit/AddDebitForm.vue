@@ -6,13 +6,13 @@
       type="number"
       hide-details
       outlined
-      @blur="validateCreditFields('quantity')"
+      @blur="validateDebitFields('quantity')"
     >
     </v-text-field>
 
     <ErrorAlertComponent
-      v-if="creditErrorMessages.installment_quantity != ''"
-      :errorMessage="creditErrorMessages.installment_quantity"
+      v-if="debitErrorMessages.installment_quantity != ''"
+      :errorMessage="debitErrorMessages.installment_quantity"
     />
     <div class="mt-5"></div>
 
@@ -23,13 +23,13 @@
       hide-details
       outlined
       value
-      @blur="validateCreditFields('percentage')"
+      @blur="validateDebitFields('percentage')"
     >
     </v-text-field>
 
     <ErrorAlertComponent
-      v-if="creditErrorMessages.installment_percentage != ''"
-      :errorMessage="creditErrorMessages.installment_percentage"
+      v-if="debitErrorMessages.installment_percentage != ''"
+      :errorMessage="debitErrorMessages.installment_percentage"
     />
 
     <div class="mt-5"></div>
@@ -37,7 +37,7 @@
     <div class="d-flex justify-center">
       <DefaultButton
         :text_button="isEditing ? 'Salvar Parcelamento' : 'Criar parcelamento'"
-        @callback="createCredit"
+        @callback="createDebit"
       >
       </DefaultButton>
     </div>
@@ -54,32 +54,32 @@ export default {
   },
   computed: {
     ...mapGetters({
-      creditForm: "credit/creditForm",
-      creditErrorMessages: "credit/creditErrorMessages",
-      isEditing: "credit/isEditing",
+      debitForm: "debitStore/debitForm",
+      debitErrorMessages: "debitStore/debitErrorMessages",
+      isEditing: "debitStore/isEditing",
     }),
     switchInstallmentQuantity: {
       get() {
-        return this.creditForm.installment_quantity;
+        return this.debitForm.installment_quantity;
       },
       set(value) {
-        this.setCreditForm({ part: "installment_quantity", value: value });
+        this.setDebitForm({ part: "installment_quantity", value: value });
       },
     },
     SwitchInstallMentPercentage: {
       get() {
-        return this.creditForm.installment_percentage;
+        return this.debitForm.installment_percentage;
       },
       set(value) {
-        this.setCreditForm({ part: "installment_percentage", value: value });
+        this.setDebitForm({ part: "installment_percentage", value: value });
       },
     },
   },
   methods: {
     ...mapActions({
-      setCreditForm: "credit/setCreditForm",
-      createCredit: "credit/createCredit",
-      validateCreditFields: "credit/validateCreditFields",
+      setDebitForm: "debitStore/setDebitForm",
+      createDebit: "debitStore/createDebit",
+      validateDebitFields: "debitStore/validateDebitFields",
     }),
   },
 };

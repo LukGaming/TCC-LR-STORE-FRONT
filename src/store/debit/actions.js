@@ -39,7 +39,7 @@ export const actions = {
           commit("setDebitDialog", false);
         }
       } else {
-        var res = await $http.patch(`debit/${state.creditForm.id}`, {
+        var res = await $http.patch(`debit/${state.debitForm.id}`, {
           ...formData,
         });
 
@@ -121,7 +121,7 @@ export const actions = {
           ? "A quantidade de parcelas de débito não pode ser zero."
           : "";
 
-      commit("setCreditErrorMessages", {
+      commit("setDebitErrorMessages", {
         part: "setDebitErrorMessages",
         value: errorMessage,
       });
@@ -130,11 +130,12 @@ export const actions = {
       let fieldToValidate;
       let errorMessage = "";
       fieldToValidate = state.debitForm.installment_percentage;
+      console.log(fieldToValidate);
       errorMessage =
-        fieldToValidate == null || fieldToValidate == ""
+        fieldToValidate == null
           ? "Por favor preencha o campo de porcentagem."
           : "";
-      console.log(errorMessage, "percentage");
+
       commit("setDebitErrorMessages", {
         part: "installment_percentage",
         value: errorMessage,

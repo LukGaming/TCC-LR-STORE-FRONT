@@ -2,13 +2,13 @@
   <v-row justify="center">
     <v-dialog v-model="switchDialog" persistent>
       <v-card>
-        <v-container><AddCreditForm /></v-container>
+        <v-container><AddDebitForm /></v-container>
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <DefaultButton
             text_button="fechar"
-            @callback="setCreditDialog(false)"
+            @callback="setDebitDialog(false)"
           />
         </v-card-actions>
       </v-card>
@@ -21,24 +21,24 @@ export default {
   components: {
     DefaultButton: () =>
       import("@/components/utilities/DefaultBlackButton.vue"),
-    AddCreditForm: () => import("@/components/credit/addCreditForm.vue"),
+    AddDebitForm: () => import("@/components/debit/AddDebitForm.vue"),
   },
 
   methods: {
     ...mapActions({
-      setCreditDialog: "credit/setCreditDialog",
+      setDebitDialog: "debitStore/setDebitDialog",
     }),
   },
   computed: {
     ...mapGetters({
-      creditDialog: "credit/creditDialog",
+      debitDialog: "debitStore/debitDialog",
     }),
     switchDialog: {
       get() {
-        return this.creditDialog;
+        return this.debitDialog;
       },
       set(value) {
-        this.setCreditDialog(value);
+        this.setDebitDialog(value);
       },
     },
   },

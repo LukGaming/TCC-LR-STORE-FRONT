@@ -1,32 +1,31 @@
 export const mutations = {
   setDebits(state, payload) {
-    console.log(payload);
     state.debits = payload;
   },
-  setCreditDialog(state, payload) {
-    state.creditDialog = payload;
+  setDebitDialog(state, payload) {
+    state.debitDialog = payload;
   },
-  setCreditForm(state, payload) {
-    state.creditForm[payload.part] = payload.value;
+  setDebitForm(state, payload) {
+    state.debitForm[payload.part] = payload.value;
   },
   setIsEditing(state, payload) {
     state.isEditing = payload;
   },
-  setCreditErrorMessages(state, payload) {
-    state.creditErrorMessages[payload.part] = payload.value;
+  setDebitErrorMessages(state, payload) {
+    state.debitErrorMessages[payload.part] = payload.value;
   },
-  clearCreditFields(state) {
-    state.creditForm = {
+  clearDebitFields(state) {
+    state.debitForm = {
       installment_quantity: 0,
       installment_percentage: 0,
     };
-    state.creditErrorMessages = {
+    state.debitErrorMessages = {
       installment_quantity: "",
       installment_percentage: "",
     };
   },
-  addNewCredit(state, payload) {
-    state.credits.push(payload);
+  addNewDebit(state, payload) {
+    state.debits.push(payload);
   },
   closeDeleteDialog(state) {
     state.deleteDialog = false;

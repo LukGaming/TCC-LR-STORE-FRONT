@@ -8,6 +8,9 @@ export const getters = {
   getSales(state) {
     return state.sales;
   },
+  paymentMethods(state) {
+    return state.paymentMethods;
+  },
   getHeaders(state) {
     return state.headers;
   },

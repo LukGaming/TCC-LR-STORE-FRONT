@@ -65,11 +65,59 @@
 
       <DatePickerComponent />
 
+      <v-select
+        v-model="switchPaymentMethod"
+        label="Método de pagamento"
+        :items="paymentMethods"
+        item-value="id"
+        item-text="name"
+        outlined
+        hide-details
+        @blur="validateFields('validateSelectedSalesType')"
+        :menu-props="{ bottom: true, offsetY: true }"
+      >
+      </v-select>
+      <div class="mt-5"></div>
+      <div v-if="salesFormFields.paymentMethod == 2">
+        <v-select
+          @change="(item) => setPaymentMethodToForm(item)"
+          label="Selecione a quantidade de parcelas em crédito"
+          :items="credits"
+          item-value="id"
+          :item-text="
+            (item) =>
+              `${item.installments_quantity} parcelas - ${item.installment_percentage}%`
+          "
+          outlined
+          hide-details
+          @blur="validateFields('validateSelectedSalesType')"
+          :menu-props="{ bottom: true, offsetY: true }"
+        >
+        </v-select>
+      </div>
+      <div v-if="salesFormFields.paymentMethod == 3">
+        <v-select
+          @change="(item) => setPaymentMethodToForm(item)"
+          item-value="id"
+          label="Selecione a quantidade de juros em débito"
+          :items="debits"
+          :item-text="
+            (item) =>
+              `${item.installments_quantity} parcela - ${item.installment_percentage}%`
+          "
+          outlined
+          hide-details
+          @blur="validateFields('validateSelectedSalesType')"
+          :menu-props="{ bottom: true, offsetY: true }"
+        >
+        </v-select>
+      </div>
+
       <ErrorAlertComponent
         v-if="salesErrorMessages.saleDate != ''"
         :errorMessage="salesErrorMessages.saleDate"
       />
-
+      <div class="mt-5"></div>
       <div class="d-flex justify-start">
         <DefaultButton
           text_button="Adicionar Produto"
@@ -82,7 +130,21 @@
         <DefaultButton text_button="Criar Venda" @callback="createSale">
         </DefaultButton>
       </div>
-      {{ salesFormFields }}
+      <div class=""></div>
+      <div v-for="(product, index) in salesFormFields.products" :key="index">
+        <!-- Display product details -->
+
+        <div>Quantity: {{ product.quantity }}</div>
+        <div>Unit Value: {{ product.unityValue }}</div>
+        <div>
+          Total Value: {{ (product.quantity * product.unityValue).toFixed(2) }}
+        </div>
+        <!-- Add any other details you want to display for each product -->
+        <hr />
+        <!-- Optional: Adds a horizontal line to separate products visually -->
+      </div>
+
+      Valor total dos produtos: {{ computedTotalValue }}
     </v-container>
   </div>
 </template>
@@ -151,6 +213,17 @@ export default {
         this.setSaleFormField({ part: "unityValue", value: value });
       },
     },
+    computedTotalValue: {
+      get() {
+        const products = this.salesFormFields.products;
+        if (products.length === 0) return 0;
+        let totalValue = 0;
+        products.forEach((element) => {
+          totalValue += element.quantity * element.unityValue;
+        });
+        return totalValue;
+      },
+    },
     switchSelectedClient: {
       get() {
         return this.salesFormFields.selectedClient;
@@ -167,8 +240,16 @@ export default {
         this.getProductsByManufacturers(value.id);
       },
     },
+    switchPaymentMethod: {
+      get() {
+        return this.salesFormFields.paymentMethod;
+      },
+      set(value) {
+        console.log(value);
+        this.setSaleFormField({ part: "paymentMethod", value: value });
+      },
+    },
     ...mapGetters({
-      paymentMethods: "paymentMethodStore/paymentMethods",
       products: "productStore/products",
       salesFormFields: "salesStore/salesFormFields",
       salesErrorMessages: "salesStore/salesErrorMessages",
@@ -178,13 +259,15 @@ export default {
       selectedManufacturerFromFilter:
         "salesStore/selectedManufacturerFromFilter",
       salesTypes: "salesStore/salesTypes",
+      credits: "credit/credits",
+      debits: "debitStore/debits",
+      paymentMethods: "salesStore/paymentMethods",
     }),
   },
 
   methods: {
     ...mapActions({
       setAddProductDialog: "salesStore/setAddProductDialog",
-      getPaymentMethods: "paymentMethodStore/getPaymentMethods",
       getProducts: "productStore/getProducts",
       getManufacturers: "manufacturerStore/getManufacturers",
       validateFields: "salesStore/validateFields",
@@ -196,14 +279,20 @@ export default {
       setSerialNumbersDialog: "salesStore/setSerialNumbersDialog",
       setSelectedManufacturer: "salesStore/setSelectedManufacturer",
       getProductsByManufacturers: "salesStore/getProductsByManufacturers",
+      getCreditsFromApi: "credit/getCreditsFromApi",
+      getDebitsFromApi: "debitStore/getDebitsFromApi",
     }),
+    setPaymentMethodToForm(item) {
+      console.log(item);
+    },
   },
   created() {
     this.getProducts();
-    this.getPaymentMethods();
     this.getClients();
     this.getManufacturers();
     this.getProductsByManufacturers(null);
+    this.getCreditsFromApi();
+    this.getDebitsFromApi();
   },
 };
 </script>

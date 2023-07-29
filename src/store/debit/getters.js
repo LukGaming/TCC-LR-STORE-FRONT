@@ -6,13 +6,13 @@ export const getters = {
     return state.headers;
   },
   debitDialog(state) {
-    return state.creditDialog;
+    return state.debitDialog;
   },
   debitForm(state) {
-    return state.creditForm;
+    return state.debitForm;
   },
   debitErrorMessages(state) {
-    return state.creditErrorMessages;
+    return state.debitErrorMessages;
   },
   isEditing(state) {
     return state.isEditing;

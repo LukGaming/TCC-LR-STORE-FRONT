@@ -8,12 +8,12 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Parcelamentos</v-toolbar-title>
+          <v-toolbar-title>Débitos</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-spacer></v-spacer>
           <DefaultButton
-            text_button="Adicionar Parcelas"
-            @callback="openManufacturerDialogToCreate()"
+            text_button="Adicionar Débito"
+            @callback="openDebitDialogToCreate()"
           />
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
@@ -24,7 +24,7 @@
           <v-icon
             class="mr-2"
             color="black"
-            @click="openManufacturerDialogToEdit({ edit: true, item: item })"
+            @click="openDebitDialogToEdit({ edit: true, item: item })"
           >
             mdi-pencil
           </v-icon>
@@ -53,7 +53,7 @@
       </v-card>
     </v-dialog>
 
-    <CreditFormDialog />
+    <DebitFormDialog />
   </div>
 </template>
 <script>
@@ -65,7 +65,7 @@ export default {
   components: {
     DefaultButton: () =>
       import("@/components/utilities/DefaultBlackButton.vue"),
-    CreditFormDialog: () => import("@/components/debit/AddDebitDialog.vue"),
+    DebitFormDialog: () => import("@/components/debit/AddDebitDialog.vue"),
   },
   computed: {
     ...mapGetters({
