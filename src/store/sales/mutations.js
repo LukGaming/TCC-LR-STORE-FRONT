@@ -3,7 +3,14 @@ export const mutations = {
     state.productDialog = payload;
   },
   addProduct(state, payload) {
-    state.salesFormFields.products.push(payload);
+    const newProduct = {
+      ...payload,
+      selectedProduct: { ...payload.selectedProduct },
+    };
+    state.salesFormFields.products.push(newProduct);
+  },
+  setSelectedPaymentInstallMentItem(state, payload) {
+    state.selectedPaymentInstallMentItem = payload;
   },
   setSales(state, payload) {
     state.sales = payload;

@@ -1,4 +1,7 @@
 export const getters = {
+  selectedPaymentInstallMentItem(state) {
+    return state.selectedPaymentInstallMentItem;
+  },
   isEditingSale(state) {
     return state.isEditingSale;
   },
@@ -40,5 +43,47 @@ export const getters = {
   },
   salesTypes(state) {
     return state.salesTypes;
+  },
+  computedPercentage: (state) => {
+    const selectedInstallment = state.selectedPaymentInstallMentItem;
+    console.log("selectedInstallment: ", selectedInstallment);
+
+    const computedTotalValue = state.salesFormFields.products.reduce(
+      (total, product) => {
+        return total + product.quantity * product.unityValue;
+      },
+      0
+    );
+
+    console.log("computedTotalValue: ", computedTotalValue);
+
+    if (computedTotalValue === 0) return 0;
+
+    if (state.salesFormFields.paymentMethod === 1) {
+      return computedTotalValue;
+    } else if (
+      state.salesFormFields.paymentMethod === 2 ||
+      state.salesFormFields.paymentMethod === 3
+    ) {
+      if (selectedInstallment === null) return computedTotalValue;
+
+      // Convert the percentage string to a number
+      const percentage = parseFloat(selectedInstallment.installment_percentage);
+
+      if (isNaN(percentage)) {
+        // Handle invalid percentage value
+        console.error(
+          "Invalid percentage value:",
+          selectedInstallment.installment_percentage
+        );
+        return computedTotalValue;
+      }
+
+      // Calculate the amount to add based on the percentage
+      const amountToAdd = (percentage / 100) * computedTotalValue;
+      return computedTotalValue + amountToAdd;
+    } else {
+      return 0;
+    }
   },
 };

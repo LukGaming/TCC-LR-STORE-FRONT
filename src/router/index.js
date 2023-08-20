@@ -10,6 +10,7 @@ import ClientPage from "@/components/client/ClientPage.vue";
 import PaymentMethodPageVue from "@/components/payment-method/PaymentMethodPage.vue";
 import DebitPage from "@/components/debit/DebitPage.vue";
 import CreditPage from "@/components/credit/CreditPage.vue";
+import ViewSale from "@/components/sales/ViewSale.vue";
 
 Vue.use(VueRouter);
 
@@ -79,6 +80,14 @@ const routes = [
     path: "/debit",
     name: "debitos",
     component: DebitPage,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/vendas/:id",
+    name: "vendas",
+    component: ViewSale,
     meta: {
       requiresAuth: true,
     },

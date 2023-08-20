@@ -48,27 +48,18 @@ export function validateSalesType(saleType) {
 
 export function canSendSaleForm(
   products,
-  selectedPaymentMethod,
   selectedClient,
   selectedSalesType,
   saleDate
 ) {
   const [
     productError,
-    selectedPaymentMethodError,
     selectedClientError,
     selectedSalesTypeError,
     saleDateError,
-  ] = salesValidator(
-    products,
-    selectedPaymentMethod,
-    selectedClient,
-    selectedSalesType,
-    saleDate
-  );
+  ] = salesValidator(products, selectedClient, selectedSalesType, saleDate);
   return (
     productError == "" &&
-    selectedPaymentMethodError == "" &&
     selectedClientError == "" &&
     selectedSalesTypeError == "" &&
     saleDateError == ""

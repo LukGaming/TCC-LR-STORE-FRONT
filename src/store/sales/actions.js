@@ -14,10 +14,9 @@ export const actions = {
   setAddProductDialog({ commit }, payload) {
     commit("setAddProductDialog", payload);
   },
-  addProduct({ commit, state }, payload) {
+  addProduct({ commit, state }) {
     commit("addProduct", state.productFormFields);
     commit("setAddProductDialog", false);
-    return commit, payload;
   },
   addSerialNumber({ commit }, payload) {
     commit("addSerialNumber");
@@ -42,12 +41,27 @@ export const actions = {
 
     var canSendForm = canSendSaleForm(
       state.salesFormFields.products,
-      state.salesFormFields.selectedPaymentMethod,
       state.salesFormFields.selectedClient,
       state.salesFormFields.selectedSalesType,
       state.salesFormFields.saleDate
     );
-    console.log("canSendForm", canSendForm);
+
+    console.log("state.salesFormFields", state.salesFormFields);
+
+    console.log("canSendForm: ", canSendForm);
+
+    console.log(
+      "selectedPaymentInstallMentItem",
+      state.selectedPaymentInstallMentItem
+    );
+
+    if (
+      state.salesFormFields.paymentMethod == 2 ||
+      state.salesFormFields.paymentMethod == 3
+    ) {
+      state.salesFormFields.selectedPaymentMethod =
+        state.selectedPaymentInstallMentItem;
+    }
     if (canSendForm) {
       try {
         var userId = rootState.userStore.user.id;
@@ -225,7 +239,6 @@ export const actions = {
     return commit, payload;
   },
   setSelectedManufacturer({ dispatch, rootState }, payload) {
-    console.log(rootState.productStore.products);
     return dispatch, rootState, payload;
   },
   async getProductsByManufacturers({ commit }, payload) {
@@ -242,5 +255,23 @@ export const actions = {
       commit("setProductsByManufacturers", filteredProductsByManufacturer);
     }
     commit("setSelectedManufacturerFromFilter", payload);
+  },
+  setSelectedPaymentInstallMentItem({ commit, rootGetters, state }, payload) {
+    console.log("payment Method: ", state.salesFormFields.paymentMethod);
+    if (state.salesFormFields.paymentMethod == 2) {
+      const credits = rootGetters["credit/credits"];
+      const foundCredit = credits.find((credit) => credit.id == payload);
+      commit("setSelectedPaymentInstallMentItem", foundCredit);
+    }
+    if (state.salesFormFields.paymentMethod == 3) {
+      const debits = rootGetters["debitStore/debits"];
+      const foundDebit = debits.find((debit) => debit.id == payload);
+      console.log("payload:", payload);
+      console.log("debits: ", debits);
+      commit("setSelectedPaymentInstallMentItem", foundDebit);
+    }
+    if (state.salesFormFields.paymentMethod == 1) {
+      commit("setSelectedPaymentInstallMentItem", null);
+    }
   },
 };

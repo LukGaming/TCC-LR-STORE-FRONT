@@ -22,24 +22,6 @@
 
       <div class="mt-5"></div>
 
-      <v-select
-        v-model="switchSelectedPaymentMethod"
-        label="Selecione o Método de Pagamento"
-        :items="paymentMethods"
-        item-text="name"
-        item-value="id"
-        outlined
-        hide-details
-        @blur="validateFields('validateSelectedPaymentMethod')"
-        :menu-props="{ bottom: true, offsetY: true }"
-      >
-      </v-select>
-
-      <ErrorAlertComponent
-        v-if="salesErrorMessages.selectedPaymentMethod != ''"
-        :errorMessage="salesErrorMessages.selectedPaymentMethod"
-      />
-
       <div class="mt-5"></div>
 
       <v-combobox
@@ -80,7 +62,7 @@
       <div class="mt-5"></div>
       <div v-if="salesFormFields.paymentMethod == 2">
         <v-select
-          @change="(item) => setPaymentMethodToForm(item)"
+          @change="($value) => setPaymentMethodToForm($value)"
           label="Selecione a quantidade de parcelas em crédito"
           :items="credits"
           item-value="id"
@@ -90,7 +72,6 @@
           "
           outlined
           hide-details
-          @blur="validateFields('validateSelectedSalesType')"
           :menu-props="{ bottom: true, offsetY: true }"
         >
         </v-select>
@@ -130,21 +111,19 @@
         <DefaultButton text_button="Criar Venda" @callback="createSale">
         </DefaultButton>
       </div>
-      <div class=""></div>
-      <div v-for="(product, index) in salesFormFields.products" :key="index">
-        <!-- Display product details -->
 
-        <div>Quantity: {{ product.quantity }}</div>
-        <div>Unit Value: {{ product.unityValue }}</div>
+      <div v-for="(product, index) in salesFormFields.products" :key="index">
+        <div>Quantidade : {{ product.quantity }}</div>
+        <div>Valor da unidade: {{ product.unityValue }}</div>
         <div>
-          Total Value: {{ (product.quantity * product.unityValue).toFixed(2) }}
+          Valor total: {{ (product.quantity * product.unityValue).toFixed(2) }}
         </div>
-        <!-- Add any other details you want to display for each product -->
         <hr />
-        <!-- Optional: Adds a horizontal line to separate products visually -->
       </div>
 
-      Valor total dos produtos: {{ computedTotalValue }}
+      Valor total dos produtos: {{ computedTotalValue }} <br />
+      Valor a ser cobrado: {{ computedPercentage }}<br />
+      Valor pago em juros: {{ computedPercentage - computedTotalValue }}
     </v-container>
   </div>
 </template>
@@ -216,14 +195,16 @@ export default {
     computedTotalValue: {
       get() {
         const products = this.salesFormFields.products;
-        if (products.length === 0) return 0;
-        let totalValue = 0;
-        products.forEach((element) => {
-          totalValue += element.quantity * element.unityValue;
-        });
-        return totalValue;
+        if (products.length === 0) {
+          return 0;
+        }
+
+        return products.reduce((total, product) => {
+          return total + product.quantity * product.unityValue;
+        }, 0);
       },
     },
+
     switchSelectedClient: {
       get() {
         return this.salesFormFields.selectedClient;
@@ -245,7 +226,6 @@ export default {
         return this.salesFormFields.paymentMethod;
       },
       set(value) {
-        console.log(value);
         this.setSaleFormField({ part: "paymentMethod", value: value });
       },
     },
@@ -262,6 +242,9 @@ export default {
       credits: "credit/credits",
       debits: "debitStore/debits",
       paymentMethods: "salesStore/paymentMethods",
+      computedPercentage: "salesStore/computedPercentage",
+      selectedPaymentInstallMentItem:
+        "salesStore/selectedPaymentInstallMentItem",
     }),
   },
 
@@ -281,9 +264,11 @@ export default {
       getProductsByManufacturers: "salesStore/getProductsByManufacturers",
       getCreditsFromApi: "credit/getCreditsFromApi",
       getDebitsFromApi: "debitStore/getDebitsFromApi",
+      setSelectedPaymentInstallMentItem:
+        "salesStore/setSelectedPaymentInstallMentItem",
     }),
-    setPaymentMethodToForm(item) {
-      console.log(item);
+    setPaymentMethodToForm(value) {
+      this.setSelectedPaymentInstallMentItem(value);
     },
   },
   created() {

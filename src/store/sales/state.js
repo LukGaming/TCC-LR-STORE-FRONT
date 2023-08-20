@@ -2,6 +2,7 @@ export const state = {
   productDialog: false,
   isEditingSale: false,
   sales: [],
+  selectedPaymentInstallMentItem: null,
   paymentMethods: [
     {
       id: 1,
