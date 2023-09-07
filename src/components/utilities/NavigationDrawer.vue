@@ -34,13 +34,13 @@
               ><div @click="goToClients()">Clientes</div></v-list-item-title
             >
           </v-list-item>
-          <v-list-item>
+          <!-- <v-list-item>
             <v-list-item-title
               ><div @click="goToPaymentMethod()">
                 Métodos de Pagamento
               </div></v-list-item-title
             >
-          </v-list-item>
+          </v-list-item> -->
           <v-list-item>
             <v-list-item-title>
               <div @click="goToCredit()">Taxas de crédito</div>

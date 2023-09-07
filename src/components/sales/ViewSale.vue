@@ -46,14 +46,7 @@
         </v-card-text>
       </v-card>
       <v-divider></v-divider>
-      <v-card>
-        <v-card-title>Detalhes do pagamento</v-card-title>
-        <v-card-text>
-          <strong>Detalhes do pagamento:</strong>
-          {{ sale.selectedPaymentMethod }}
-          <div></div>
-        </v-card-text>
-      </v-card>
+
       <v-divider></v-divider>
       <v-card>
         <v-card-title>Produtos</v-card-title>
@@ -64,18 +57,16 @@
               :key="productSale.id"
             >
               <v-list-item-content>
-                <v-list-item-title>
-                  <strong>Product ID:</strong> {{ productSale.product_id }}
-                </v-list-item-title>
                 <v-list-item-subtitle>
-                  <strong>Serial Numbers:</strong>
+                  <strong>Números de série</strong>
                   {{ productSale.serial_numbers }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
-                  <strong>Unity Value:</strong> {{ productSale.unity_value }}
+                  <strong>Valor da unidade: </strong>
+                  {{ productSale.unity_value }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
-                  <strong>Quantity:</strong> {{ productSale.quantity }}
+                  <strong>Quantidade:</strong> {{ productSale.quantity }}
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>

@@ -18,11 +18,12 @@ export const state = {
     },
   ],
   headers: [
+    { text: "Data da venda", value: "sale_date" },
     { text: "Valor total", value: "total_value" },
-    { text: "Cliente", value: "client.full_name" },
-    { text: "Tipo de venda", value: "actions" },
-    { text: "Método de pagamento", value: "payment_method.name" },
+    { text: "Tipo de venda", value: "sale_type" },
     { text: "Vendedor", value: "user.user_name" },
+    { text: "Cliente", value: "client.full_name" },
+
     { text: "Ações", value: "actions" },
   ],
   productsByManufacturers: [],
