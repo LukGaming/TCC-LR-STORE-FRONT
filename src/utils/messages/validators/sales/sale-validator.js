@@ -15,7 +15,7 @@ export function salesValidator(
 }
 
 export function validateProducts(products) {
-  return products == null || products == []
+  return products == null || products.length === 0
     ? "A lista de produtos não pode ficar vazia."
     : "";
 }
@@ -40,7 +40,6 @@ export function validateSaleDate(saleDate) {
 }
 
 export function validateSalesType(saleType) {
-  console.log("inside validator", saleType);
   return saleType == null || saleType == ""
     ? "Selecione um tipo de Venda."
     : "";

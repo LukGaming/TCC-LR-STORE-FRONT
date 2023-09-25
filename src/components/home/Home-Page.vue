@@ -54,7 +54,7 @@ export default {
     ...mapActions({ getSales: "salesStore/getSales" }),
     goToSaleDetails(payload) {
       //TODO: implementar visualizacao
-      console.log(payload);
+
       this.$router.push(`/vendas/${payload.id}`);
     },
     createSale() {

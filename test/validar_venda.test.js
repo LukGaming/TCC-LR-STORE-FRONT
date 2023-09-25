@@ -7,7 +7,7 @@ import {
   validateSalesType,
   validateSaleDate,
   canSendSaleForm,
-} from "../src/utils/messages/validators/sales/SalesValidator";
+} from "../src/utils/messages/validators/sales/sale-validator";
 
 test("validateProducts - should return error message for empty product list", () => {
   expect(validateProducts(null)).toBe(
