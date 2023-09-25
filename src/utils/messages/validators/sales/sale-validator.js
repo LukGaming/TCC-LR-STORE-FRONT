@@ -14,7 +14,7 @@ export function salesValidator(
   ];
 }
 
-function validateProducts(products) {
+export function validateProducts(products) {
   return products == null || products == []
     ? "A lista de produtos não pode ficar vazia."
     : "";
