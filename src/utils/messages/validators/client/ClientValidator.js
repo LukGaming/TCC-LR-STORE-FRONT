@@ -6,31 +6,40 @@ export function clientValidator(name, phoneNumber, cpf) {
   ];
 }
 
-function validateClientName(name) {
+export function validateClientName(name) {
   return name == null || name == ""
     ? "O campo de Nome não pode ficar vazio."
     : "";
 }
 
-function validateClientPhoneNumber(phoneNumber) {
+export function validateClientPhoneNumber(phoneNumber) {
   return phoneNumber == null || phoneNumber == ""
     ? "O campo de Telefone não pode ficar vazio."
     : "";
 }
 
-function validateClientCpf(cpf) {
-  // console.log(cpf.lenght.Kkle)
-  cpf = cpf.replaceAll("-", "")
-  cpf = cpf.replaceAll(".", "")
-  console.log(cpf)
-  return cpf == null || cpf == ""
-    ? "O campo de Cpf não pode ficar vazio"
-    : cpf.length != 11
-    ? "O cpf deve conter 11 Dígitos"
-    : "";
+export function validateClientCpf(cpf) {
+  if (cpf === null) {
+    return "O campo de Cpf não pode ficar vazio";
+  }
 
-  //removo '/'
-  //.
+  // Check for other falsy values if needed (e.g., an empty string)
+  if (!cpf) {
+    return "O campo de Cpf não pode ficar vazio";
+  }
+
+  // Remove dashes and periods from the CPF
+  cpf = cpf.replaceAll("-", "").replaceAll(".", "");
+
+  // Check if the resulting CPF has 11 digits
+  if (cpf.length !== 11) {
+    return "O cpf deve conter 11 Dígitos";
+  }
+
+  // Additional validation logic for CPF can be added here
+
+  // If no validation errors were found, return an empty string
+  return "";
 }
 
 export function verifyIfCanSendClientForm(name, phoneNumber, cpf) {
